@@ -1,0 +1,52 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --font-display: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  --font-mono: "Pretendard", monospace;
+  --color-navy: #0f172a;
+  --color-brand-blue: #1d4ed8;
+  --color-gray-light: #f8fafc;
+  --color-line: #e2e8f0;
+}
+
+/* Custom Scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transitions */
+html {
+  scroll-behavior: smooth;
+  background-color: #f8fafc;
+}
+
+/* Professional Polish Custom Styles */
+.hero-circle-deco {
+  position: relative;
+  overflow: hidden;
+}
+.hero-circle-deco::after {
+  content: '';
+  position: absolute;
+  right: -50px;
+  top: -50px;
+  width: 250px;
+  height: 250px;
+  border: 40px solid rgba(29, 78, 216, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+}
+

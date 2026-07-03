@@ -1,0 +1,6 @@
+{
+  "name": "광성산업 - 산업용 열처리로 전문 기업",
+  "description": "설계, 제작, 설치, 시운전, 유지보수까지 원스톱 솔루션을 제공하는 산업용 열처리로 전문 기업 홈페이지입니다.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
