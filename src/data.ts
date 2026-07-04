@@ -109,38 +109,56 @@ const INQUIRY_KEY = 'furnace_app_customer_inquiries';
 
 export function getStoredPortfolio(): PortfolioItem[] {
   if (typeof window === 'undefined') return INITIAL_PORTFOLIO;
-  const stored = localStorage.getItem(PORTFOLIO_KEY);
-  if (!stored) {
-    localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(INITIAL_PORTFOLIO));
-    return INITIAL_PORTFOLIO;
-  }
   try {
+    const stored = localStorage.getItem(PORTFOLIO_KEY);
+    if (!stored) {
+      try {
+        localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(INITIAL_PORTFOLIO));
+      } catch (err) {
+        console.warn('localStorage is disabled or blocked:', err);
+      }
+      return INITIAL_PORTFOLIO;
+    }
     return JSON.parse(stored);
   } catch (e) {
+    console.warn('Failed to load portfolio from localStorage, falling back to initial:', e);
     return INITIAL_PORTFOLIO;
   }
 }
 
 export function savePortfolio(items: PortfolioItem[]): void {
   if (typeof window === 'undefined') return;
-  localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(items));
+  try {
+    localStorage.setItem(PORTFOLIO_KEY, JSON.stringify(items));
+  } catch (e) {
+    console.warn('Failed to save portfolio to localStorage:', e);
+  }
 }
 
 export function getStoredInquiries(): Inquiry[] {
   if (typeof window === 'undefined') return INITIAL_INQUIRIES;
-  const stored = localStorage.getItem(INQUIRY_KEY);
-  if (!stored) {
-    localStorage.setItem(INQUIRY_KEY, JSON.stringify(INITIAL_INQUIRIES));
-    return INITIAL_INQUIRIES;
-  }
   try {
+    const stored = localStorage.getItem(INQUIRY_KEY);
+    if (!stored) {
+      try {
+        localStorage.setItem(INQUIRY_KEY, JSON.stringify(INITIAL_INQUIRIES));
+      } catch (err) {
+        console.warn('localStorage is disabled or blocked:', err);
+      }
+      return INITIAL_INQUIRIES;
+    }
     return JSON.parse(stored);
   } catch (e) {
+    console.warn('Failed to load inquiries from localStorage, falling back to initial:', e);
     return INITIAL_INQUIRIES;
   }
 }
 
 export function saveInquiries(inquiries: Inquiry[]): void {
   if (typeof window === 'undefined') return;
-  localStorage.setItem(INQUIRY_KEY, JSON.stringify(inquiries));
+  try {
+    localStorage.setItem(INQUIRY_KEY, JSON.stringify(inquiries));
+  } catch (e) {
+    console.warn('Failed to save inquiries to localStorage:', e);
+  }
 }
