@@ -89,12 +89,12 @@ export default function Header({
           {/* Utility Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             <a
-              href="tel:010-1234-5678"
+              href="tel:031-497-7671"
               id="header-phone-btn"
               className="flex items-center space-x-1.5 bg-slate-50 border border-line hover:border-brand-blue/50 text-slate-700 hover:text-navy px-3.5 py-2 rounded-lg text-xs font-bold transition-all"
             >
               <PhoneCall className="w-3.5 h-3.5 text-brand-blue" />
-              <span>010-1234-5678</span>
+              <span>031-497-7671</span>
             </a>
 
             {isAdmin ? (
@@ -160,11 +160,11 @@ export default function Header({
 
           <div className="pt-4 border-t border-line flex flex-col space-y-2">
             <a
-              href="tel:010-1234-5678"
+              href="tel:031-497-7671"
               className="flex items-center justify-center space-x-2 bg-slate-50 border border-line text-slate-700 py-3 rounded-lg text-xs sm:text-sm font-bold"
             >
               <PhoneCall className="w-4 h-4 text-brand-blue" />
-              <span>010-1234-5678 (전화상담)</span>
+              <span>031-497-7671 (전화상담)</span>
             </a>
 
             {!isAdmin ? (

@@ -31,10 +31,8 @@ export default function Footer() {
           <div className="space-y-4 md:pl-12">
             <h4 className="text-white font-extrabold text-sm uppercase tracking-wide">업무 시간 안내</h4>
             <ul className="space-y-2 text-slate-400 font-medium">
-              <li>• 공장 상시 가동 (설계/제조팀)</li>
               <li>• 기술 상담: 08:30 ~ 18:30 (평일/주말)</li>
               <li>• 현장 정밀 진단: 사전 조율 시 즉각 조치</li>
-              <li>• 긴급 장애 대응 및 복구: 24시간 가동</li>
             </ul>
           </div>
 

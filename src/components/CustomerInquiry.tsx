@@ -177,7 +177,7 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 font-bold">전화 직통 기술 상담 (평일/주말 상시 대응)</p>
-                  <p className="text-lg sm:text-xl font-extrabold text-navy tracking-tight mt-1">010-1234-5678</p>
+                  <p className="text-lg sm:text-xl font-extrabold text-navy tracking-tight mt-1">031-497-7671</p>
                 </div>
               </div>
 
