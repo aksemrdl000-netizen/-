@@ -83,18 +83,18 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
   };
 
   const values = [
-    { title: '생산성 향상', desc: '초고속 램프-업 속도와 정밀 자동 제어를 통해 가열 시간을 최적화하고 공장 1일 처리량을 극대화합니다.' },
-    { title: '에너지 절감', desc: '리큐퍼레이터 버너 시스템 및 특수 축열 단열벽 설계로 기존 노후 장비 대비 가스·전력을 최대 30% 이상 절약합니다.' },
-    { title: '균일한 품질', desc: '다구역 제어로 로내 가열 편차를 억제하여 잔류 응력과 변형을 완벽 제어, 균일하고 하자 없는 완성품을 인도합니다.' },
-    { title: '유지관리 비용 절감', desc: '히터 교환이 쉬운 외장 장착식 구조와 고수명 내열 내식 강재 사용으로 불필요한 보수비 지출을 완전 봉쇄합니다.' },
-    { title: '장비 수명 극대화', desc: '열팽창 완화 프레임 설계를 토대로 하여 초고온 운용 스트레스를 예방, 설계 내구 수명 15년 이상을 충족합니다.' }
+    { title: '성능 100% 복원', desc: '정밀 온도 보정 및 열선 재배치, 노체 균열 보강을 통해 신제품 수준의 높은 가열 성능과 온도 분배율을 되찾아 드립니다.' },
+    { title: '독보적 에너지 절감', desc: '손상된 구형 단열재를 고밀도 세라믹 파이버로 전면 재시공하고 폐열 회수식 버너를 튜닝하여 전력·가스 소모를 즉시 줄입니다.' },
+    { title: '불량률 제로 회복', desc: 'SCR 정밀 다구역 전력 제어반 및 고성능 디지털 PID 시스템으로 로내 온도 편차를 ±1℃ 이내로 극소화하여 열처리 하자를 예방합니다.' },
+    { title: '유지 정비 비용 절감', desc: '외장식 교환 발열체 유닛 개조, 표준화된 고수명 소모품 적용으로 불필요한 사후 관리 및 수리비 지출을 영구 예방합니다.' },
+    { title: '설비 수명 10년 연장', desc: '로체 골조 보강과 열변형 방지 지지 설계를 통해 신규 설비 교체 비용 대비 단 20~30%의 예산으로 사용 수명을 획기적으로 늘립니다.' }
   ];
 
   const consultSteps = [
-    { num: '01', title: '전화 상담 및 접수', desc: '간단 조건 파악' },
-    { num: '02', title: '무상 현장 정밀 실사', desc: '인입 전기/가스 동선 파악' },
-    { num: '03', title: '설계안 및 투명 견적 제안', desc: '최종 가격 확정' },
-    { num: '04', title: '일괄 책임 제작 및 설치', desc: '시운전 및 안전 검사' }
+    { num: '01', title: '전화 상담 및 애로 접수', desc: '고장 현상, 온도 편차, 버너 실화 상태 등 1차 진단' },
+    { num: '02', title: '무상 현장 정밀 실사 및 정밀 진단', desc: '당사 수석 엔지니어가 직접 방문하여 로체 열화 및 열선 저항 정밀 계측' },
+    { num: '03', title: '보수/개조 도면 및 투명 견적서 제안', desc: '과다 정비를 지양하고 필수 정비 내역 중심의 명확한 투명 내역서 산출' },
+    { num: '04', title: '현장 신속 시공 및 시운전 검증', desc: '숙련된 기술진의 안전 밀착 정비 시공 및 가열 균일도(TUS) 최종 검증' }
   ];
 
   return (
@@ -109,11 +109,11 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
             <p className="text-xs text-brand-blue font-bold uppercase tracking-widest">Customer Value Addition</p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-navy tracking-tight">
-              열처리로 제작을 통한 미래 경쟁력 확보
+              열처리로 보수·개조를 통한 설비 경쟁력 극대화
             </h2>
             <div className="h-1 w-12 bg-brand-blue mx-auto rounded-full" />
             <p className="text-slate-500 text-sm sm:text-base leading-relaxed font-medium">
-              설비를 새로 제작하거나 노후 장비를 업그레이드할 때 고객사에 가져올 핵심 경영학적 가치입니다.
+              기존 노후 설비를 리모델링하고 철저히 보수함으로써 실현되는 가동 안정성과 경영 효율성 가치입니다.
             </p>
           </div>
 
@@ -145,10 +145,10 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
               <div className="space-y-4">
                 <p className="text-xs text-brand-blue font-bold uppercase tracking-widest">Consultation Request</p>
                 <h2 className="font-display text-3xl font-extrabold text-navy tracking-tight">
-                  무료 기술 자문 및 견적 문의
+                  무료 노후 설비 진단 및 정비·개조 문의
                 </h2>
                 <p className="text-slate-500 text-sm leading-relaxed font-medium">
-                  견적 산정 및 설치 동선 확인을 위해 엔지니어가 무상 현장 실사를 지원합니다. 부담 없이 연락해주십시오.
+                  정확한 정비 분석, 부식 상태 검사, 전장 계측 장비 노후도 실사를 위해 전문 엔지니어가 직접 무상 현장 진단을 지원합니다.
                 </p>
               </div>
 
@@ -208,9 +208,9 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
                       <CheckCircle2 className="w-10 h-10 text-brand-blue" />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-xl font-extrabold text-navy">견적 상담 신청 완료</h3>
+                      <h3 className="text-xl font-extrabold text-navy">정비 및 개조 상담 신청 완료</h3>
                       <p className="text-sm text-slate-500 leading-relaxed max-w-md mx-auto font-medium">
-                        성공적으로 견적 의뢰서가 저장되었습니다. 담당 수석 엔지니어가 접수 즉시 기재하신 연락처로 전화드려 1차 유선 컨설팅을 제공하겠습니다.
+                        성공적으로 기술 진단 의뢰서가 저장되었습니다. 담당 수석 엔지니어가 접수 즉시 연락처로 전화드려 긴급 유선 자문 및 방문 일정을 조율해 드립니다.
                       </p>
                     </div>
                     <button
@@ -281,17 +281,17 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-navy">희망 설비 종류</label>
+                        <label className="text-xs font-bold text-navy">정비/개조 대상 설비 종류</label>
                         <input
                           type="text"
-                          placeholder="예: 대형 카타입 열처리로"
+                          placeholder="예: 대형 카타입 가스로 수리 / 제어반 개조"
                           value={furnaceType}
                           onChange={(e) => setFurnaceType(e.target.value)}
                           className="w-full bg-gray-light border border-line focus:border-brand-blue focus:bg-white text-navy rounded-xl px-4 py-3 text-sm focus:outline-none transition-all placeholder:text-slate-400 font-medium"
                         />
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-navy">사용 희망 온도</label>
+                        <label className="text-xs font-bold text-navy">사용 가열 온도</label>
                         <input
                           type="text"
                           placeholder="예: 상용 950℃ / 최대 1,100℃"
@@ -303,11 +303,11 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-xs font-bold text-navy">추가 상세 의뢰 내용 <span className="text-brand-blue">*</span></label>
+                      <label className="text-xs font-bold text-navy">현재 고장 증상 및 정비/개조 요청 내용 <span className="text-brand-blue">*</span></label>
                       <textarea
                         required
                         rows={4}
-                        placeholder="예: 열처리하고자 하는 제품 규격, 일평균 가열 물량, 신규 설치 공장 장소 등을 간략히 적어주시면 훨씬 심도 높은 1차 견적 분석이 가능합니다."
+                        placeholder="예: 현재 단열재 이탈 현상이 발생하고 있거나, 로 내부 온도 편차가 벌어져 가공 불량이 납니다. 혹은 구형 전장 제어반을 고정밀 PLC 및 터치스크린으로 개조하고 싶습니다."
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         className="w-full bg-gray-light border border-line focus:border-brand-blue focus:bg-white text-navy rounded-xl px-4 py-3 text-sm focus:outline-none transition-all placeholder:text-slate-400 font-medium resize-none"

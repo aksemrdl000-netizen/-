@@ -7,7 +7,7 @@ interface HeroProps {
 }
 
 export default function Hero({ onScrollTo }: HeroProps) {
-  const steps = ['설계', '제작', '설치', '시운전', '유지보수'];
+  const steps = ['노후 진단', '보수 설계', '부품 교체', '단열/제어 보강', '정기 점검'];
 
   return (
     <section
@@ -41,7 +41,7 @@ export default function Hero({ onScrollTo }: HeroProps) {
               className="inline-flex items-center space-x-2 bg-brand-blue/10 border border-brand-blue/30 px-4 py-2 rounded-full text-brand-blue text-xs sm:text-sm font-bold tracking-wide"
             >
               <Flame className="w-4 h-4 text-brand-blue animate-pulse" />
-              <span>기술로 완성하는 산업용 열처리로</span>
+              <span>안전하고 완벽한 열처리로 유지보수·개조·정비</span>
             </motion.div>
 
             {/* Slogans */}
@@ -52,9 +52,9 @@ export default function Hero({ onScrollTo }: HeroProps) {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight"
               >
-                산업용 열처리로 <br className="sm:hidden" />
+                열처리로 유지보수 <br className="sm:hidden" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-amber-500">
-                  전문 제작
+                  및 개조 전문
                 </span>
               </motion.h1>
 
@@ -64,7 +64,7 @@ export default function Hero({ onScrollTo }: HeroProps) {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-lg sm:text-xl text-slate-200 font-medium max-w-2xl leading-relaxed"
               >
-                고객의 생산성과 품질을 높이는 최적의 산업용 열처리 시스템
+                기존 노후 설비 개조부터 부품 교체, 단열 보강, 제어 튜닝까지 완벽 복원
               </motion.p>
             </div>
 
@@ -76,8 +76,8 @@ export default function Hero({ onScrollTo }: HeroProps) {
               className="bg-[#1e293b]/60 backdrop-blur-sm border border-slate-800 p-5 rounded-2xl max-w-2xl"
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-brand-blue font-bold text-sm tracking-widest uppercase">One-Stop Solution</span>
-                <span className="text-xs text-slate-300">설계부터 유지보수까지 일괄 처리</span>
+                <span className="text-brand-blue font-bold text-sm tracking-widest uppercase">One-Stop Care</span>
+                <span className="text-xs text-slate-300">정밀 진단부터 보수/개조까지 완벽 케어</span>
               </div>
               <div className="grid grid-cols-5 gap-1 sm:gap-2 text-center">
                 {steps.map((step, idx) => (
@@ -105,7 +105,7 @@ export default function Hero({ onScrollTo }: HeroProps) {
                 onClick={() => onScrollTo('portfolio')}
                 className="group relative flex items-center justify-center space-x-2 bg-brand-blue hover:bg-blue-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-brand-blue/20 transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer"
               >
-                <span>포트폴리오 보기</span>
+                <span>보수·개조 실적 보기</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
@@ -113,7 +113,7 @@ export default function Hero({ onScrollTo }: HeroProps) {
                 className="flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/15 text-white font-bold px-8 py-4 rounded-xl border border-white/30 hover:border-white transition-all duration-200 cursor-pointer"
               >
                 <FileText className="w-5 h-5 text-brand-blue" />
-                <span>무료 견적 문의</span>
+                <span>유지보수·개조 문의</span>
               </button>
             </motion.div>
 
@@ -135,15 +135,15 @@ export default function Hero({ onScrollTo }: HeroProps) {
               <div className="space-y-4 font-medium">
                 <div>
                   <p className="text-xs text-slate-400">신뢰 약속</p>
-                  <p className="text-sm font-semibold text-slate-200 mt-1">"정직한 견적, 검증된 기술, 믿을 수 있는 품질"</p>
+                  <p className="text-sm font-semibold text-slate-200 mt-1">"정직한 정비 견적, 신뢰할 수 있는 설비 개조 기술"</p>
                 </div>
                 <div>
                   <p className="text-xs text-slate-400">핵심 가치</p>
-                  <p className="text-sm font-semibold text-slate-200 mt-1">실력으로 증명하고, 신뢰로 장기 파트너십을 맺습니다.</p>
+                  <p className="text-sm font-semibold text-slate-200 mt-1">최소비용으로 설비 가동 효율과 온도를 완벽 복원합니다.</p>
                 </div>
                 <div className="pt-2 flex items-center space-x-2 text-xs text-brand-blue font-mono font-bold">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                  <span>2026년 열처리 설계 표준 준수</span>
+                  <span>열처리로 유지보수 전문 안전 기준 준수</span>
                 </div>
               </div>
             </motion.div>

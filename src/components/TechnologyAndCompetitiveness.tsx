@@ -4,54 +4,54 @@ import { Check, ShieldCheck, Thermometer, Zap, Eye, Gauge, AlertTriangle, Hammer
 export default function TechnologyAndCompetitiveness() {
   const technologies = [
     {
-      title: '맞춤 설계',
-      desc: '3D CAD 및 고열 모델 시뮬레이션을 반영하여 한 치의 오차 없이 최적화 설계합니다.',
+      title: '노체 정밀 노후화 진단',
+      desc: '열화상 카메라 및 자체 계측 장비로 노체 크랙, 열화 점검 및 단열 이탈부를 정밀 분석합니다.',
       icon: <Hammer className="w-5 h-5 text-brand-blue" />
     },
     {
-      title: '고온 단열 기술',
-      desc: '1,200℃ 이상의 고온에서도 표면 온도를 상온 수준으로 보존하는 최고등급 세라믹 단열 시공.',
+      title: '고밀도 단열 보강 시공',
+      desc: '1,200℃ 이상의 고온 스트레스를 견디는 최고등급 세라믹 단열재 마감으로 열손실을 완벽 차단합니다.',
       icon: <Thermometer className="w-5 h-5 text-brand-blue" />
     },
     {
-      title: 'PID 온도제어',
-      desc: '미세 전력량 연산을 통해 설정 온도 오차 범위 ±1℃ 미만을 유지하는 정밀 제어 루프.',
+      title: 'PID 온도 제어 튜닝',
+      desc: '노후화로 틀어진 PID 전력 제어 동조화 값을 미세 보정하여 온도 오차 편차를 ±1℃ 이내로 극소화합니다.',
       icon: <Gauge className="w-5 h-5 text-brand-blue" />
     },
     {
-      title: '자동 제어 시스템',
-      desc: '터치 인터페이스 PLC 연동으로 실시간 온도기록, 레시피 기억, 무인 가동을 완벽 제어.',
+      title: '스마트 제어반 리모델링',
+      desc: '조작이 어렵고 잔고장이 잦은 구형 아날로그 계장 전반을 PLC 디지털 터치스크린으로 개조합니다.',
       icon: <Zap className="w-5 h-5 text-brand-blue" />
     },
     {
-      title: '열효율 향상 설계',
-      desc: '버너 배기가스 폐열을 신선한 공기로 리큐퍼레이팅하여 열원 소모율을 전격 저감합니다.',
+      title: '에너지 효율 극대화 개조',
+      desc: '버너 리큐퍼레이터 튜닝 및 기밀성 복원 공법으로 가동에 필요한 전력과 가스 소비를 즉시 줄입니다.',
       icon: <Check className="w-5 h-5 text-brand-blue" />
     },
     {
-      title: '에너지 절감 설계',
-      desc: '다구역(Multi-Zone) 전력 분산 제어를 통하여 피크 전력을 억제하고 대기전력을 절감합니다.',
+      title: '발열체 수명 증대 시공',
+      desc: '국산 및 최고급 칸탈 열선을 표준 유닛화하여 교환 주기를 늘리고 신속한 유지 정비 환경을 구축합니다.',
       icon: <ShieldCheck className="w-5 h-5 text-brand-blue" />
     },
     {
-      title: '안전 설계',
-      desc: '오버 템퍼 방지 제어기, 가스 압력 차단 장치, 오작동 비상 락 등 5중 통합 안전 제어반.',
+      title: '5중 안전 개조 연동',
+      desc: '과승 온도 차단기, 안전 자석 연동 스위치, 안전 가스 밸브 연동 차단 등 복합 방재 회로를 보강합니다.',
       icon: <AlertTriangle className="w-5 h-5 text-brand-blue" />
     },
     {
-      title: '유지보수 용이성',
-      desc: '발열체 교체가 외측에서 단시간 내 가능하게 한 유닛형 구조로 가동중단 시간을 단축.',
+      title: '24시간 긴급 장애 수리',
+      desc: '단열 처짐, 히터 단선, 제어 고장 등 돌발 이슈 발생 시 수석 정비팀이 신속히 출동해 복구합니다.',
       icon: <Eye className="w-5 h-5 text-brand-blue" />
     }
   ];
 
   const comparisonRows = [
-    { label: '맞춤설계', general: '△ (규격화 위주 공급)', us: '● (1:1 완전 주문 설계)' },
-    { label: '제작', general: '○ (일반 용접 및 외부 사급)', us: '● (특수 내열 강판 자체 제관)' },
-    { label: '설치', general: '△ (외부 현장 인력 투입)', us: '● (담당 전담 설계진 상주 감독)' },
-    { label: '시운전', general: '△ (기초 가온 점검에 국한)', us: '● (PID 전구역 자동 동조 및 튜닝)' },
-    { label: 'A/S 및 사후관리', general: '△ (부품 수급 지연 다반사)', us: '● (실시간 밀착 정비망, 24시 대응)' },
-    { label: '견적 산출', general: '불명확 (추가금 빈발)', us: '명확 (마진 제거 정직한 내역 제시)' }
+    { label: '노체 진단 능력', general: '육안 확인 및 어림치 판정', us: '● (열화상 및 계측기 활용 정밀 열손실 분석)' },
+    { label: '부품 정비 및 교체', general: '호환이 어려운 고가 독점 부품 공급 유도', us: '● (규격화·표준화 부품 적용으로 단가 절감)' },
+    { label: '단열재 전면 시공', general: '단열재 단순 충진에 의한 빠른 재이탈', us: '● (이중 지지 프레임 보강 및 특수 모르타르 접착)' },
+    { label: '온도 균질도(TUS) 테스트', general: '단순히 온도 상승 여부만 확인', us: '● (다구역 계측을 통한 분배율 오차 미세 보정)' },
+    { label: '제어반 리모델링 기술', general: '단순 마그네틱/릴레이 등 배선 수리 한계', us: '● (구형 아날로그를 PLC 터치 감시반으로 리빌딩)' },
+    { label: '장애 긴급 긴급 출동', general: '사후 관리 회피 및 일정 지연 다반사', us: '● (정비 전문가 밀착 대기, 24시간 내 착수)' }
   ];
 
   return (
@@ -70,7 +70,7 @@ export default function TechnologyAndCompetitiveness() {
             </h2>
             <div className="h-1 w-12 bg-brand-blue mx-auto rounded-full" />
             <p className="text-slate-500 text-sm sm:text-base leading-relaxed font-medium">
-              열처리의 핵심은 고온 유지도 중요하지만, 공간 내 온도가 얼마나 균일하게 전달되는가(온도 분포)입니다. 광성산업의 설계 표준은 전 세계 기준에 부합합니다.
+              열처리로 사후 관리의 핵심은 일시적 땜질식 처방이 아닌, 근본적인 온도 균질도(Uniformity) 회복과 에너지 효율 리모델링입니다. 광성산업의 정비 표준은 검증된 엔지니어링을 토대로 합니다.
             </p>
           </div>
 
@@ -106,7 +106,7 @@ export default function TechnologyAndCompetitiveness() {
                 경쟁사 비교 분석표
               </h2>
               <p className="text-slate-500 text-sm leading-relaxed font-medium">
-                일반적인 임가공 위주 공급 업체들과의 기술 완성도 및 신용 지표 격차를 투명하게 공개합니다.
+                가동 중단 시간을 최소화하고 정비 예산을 가장 투명하게 환원하는 광성산업만의 독보적인 강점입니다.
               </p>
 
               <div className="space-y-3 bg-white p-5 rounded-2xl border border-line text-xs text-slate-500 shadow-sm">

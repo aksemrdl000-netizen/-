@@ -5,44 +5,44 @@ export default function WhyChooseUs() {
   const cards = [
     {
       title: '실력 (Skill)',
-      subtitle: '검증된 정밀 가공 기술',
+      subtitle: '검증된 사후 관리 엔지니어링',
       icon: <Award className="w-8 h-8 text-brand-blue" />,
       color: 'border-line border-l-4 border-l-brand-blue bg-white',
       glow: 'shadow-md shadow-slate-100',
       points: [
-        '풍부한 산업용 열처리로 제작 경험',
-        '다양한 형태의 맞춤형 산업로 설계 및 제조',
-        '현장 맞춤형 최적화 설계 솔루션',
-        '초정밀 안정성 확보를 위한 PID 온도 제어',
-        '에너지 세이빙을 보장하는 높은 열효율 공법'
+        '수십 년간 축적된 다양한 제조사 열처리로 정비 이력',
+        '노후 노체 분해 수리 및 고성능 내열강 특수 제관 용접',
+        '오차 범위 ±1℃ 복원을 위한 PID 제어 시스템 튜닝 기술',
+        '단열 두께 보강 및 열 손실 시뮬레이션 기반 마감 시공',
+        '구형 조작반의 최신 PLC 모니터링 스마트 자동화 개조'
       ]
     },
     {
       title: '신뢰 (Trust)',
-      subtitle: '책임감 있는 원스톱 파트너십',
+      subtitle: '책임감 있는 정직한 파트너십',
       icon: <ShieldCheck className="w-8 h-8 text-blue-600" />,
       color: 'border-line border-l-4 border-l-navy bg-white',
       glow: 'shadow-md shadow-slate-100',
       points: [
-        '약속을 최우선으로 지키는 투명한 기업',
-        '허위 마진 없는 투명하고 정직한 견적',
-        '완성도 높은 마감과 정확한 납기 준수',
-        '설치 후 안정적인 시운전 및 철저한 A/S 사후관리',
-        '지속적인 정비 지원으로 고객과의 장기적인 파트너십'
+        '허위 과다 견적을 원천 배제한 투명한 필수 정비 공정 제안',
+        '수리 자재의 출처가 확실한 정품 세라믹 파이버 및 국산 히터 적용',
+        '공장 생산에 지장이 없도록 가동 중단 일정을 준수하는 시공 마감',
+        '정비 완료 후 온도 균질도(TUS) 테스트를 통한 객관적 검증 지원',
+        '24시간 긴급 수리 긴급 대응반 운영을 통한 지속적 파트너십'
       ]
     },
     {
       title: '합리적인 가격 (Value)',
-      subtitle: '과도한 예산 지출 방지',
+      subtitle: '불필요한 설비 신설 비용 완전 차단',
       icon: <DollarSign className="w-8 h-8 text-emerald-600" />,
       color: 'border-line border-l-4 border-l-navy bg-white',
       glow: 'shadow-md shadow-slate-100',
       points: [
-        '과스펙을 피하고 현장 사양에 꼭 필요한 기능만 제안',
-        '불필요한 제조 단가 및 설계 유통 비용 제거',
-        '고객 예산 범위에 최적화된 최적 설계 적용',
-        '운영 전력 및 가스 소모량 최적화를 통한 가동 비용 절감',
-        '비용 대비 높은 내구성으로 긴 유지관리 주기 제공'
+        '신설 대비 70~80% 예산 절감 효과가 있는 노후로 리모델링 기법',
+        '과스펙 정비를 지양하고 고장 원인 부위만을 정밀 정비하는 가격 합리성',
+        '단열재 완벽 충진으로 열방출을 막아 월 가스·전력 요금 최대 30% 절감',
+        '표준화된 고수명 소모성 교체 부품 보급을 통한 유지비 최소화',
+        '가동 신뢰도 증가로 생산 불량률을 감소시켜 원가 절감 기여'
       ]
     }
   ];
@@ -65,7 +65,7 @@ export default function WhyChooseUs() {
           </h2>
           <div className="h-1 w-12 bg-brand-blue mx-auto rounded-full" />
           <p className="text-slate-500 text-sm sm:text-base leading-relaxed font-medium">
-            단순히 기계를 납품하는 것을 넘어, 생산 공정의 생산성과 최고 수준의 품질을 보장합니다.
+            기존 설비의 경제성과 가동 안전성을 최고 수준으로 끌어올리는 광성산업만의 약속입니다.
           </p>
         </div>
 

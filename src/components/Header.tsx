@@ -30,10 +30,10 @@ export default function Header({
   const navItems = [
     { id: 'home', label: '홈' },
     { id: 'why-us', label: '핵심경쟁력' },
-    { id: 'process', label: '제작과정' },
-    { id: 'portfolio', label: '포트폴리오' },
-    { id: 'technology', label: '기술력' },
-    { id: 'inquiry', label: '견적문의' },
+    { id: 'process', label: '정비절차' },
+    { id: 'portfolio', label: '보수실적' },
+    { id: 'technology', label: '정비기술력' },
+    { id: 'inquiry', label: '정비문의' },
   ];
 
   const handleItemClick = (id: string) => {

@@ -5,51 +5,51 @@ export default function ProcessTimeline() {
   const steps = [
     {
       num: '01',
-      title: '상담',
+      title: '정비 상담',
       icon: <PhoneCall className="w-5 h-5 text-brand-blue" />,
-      desc: '사용 목적, 규격, 목표 온도 조율'
+      desc: '이상 증상, 제어 오작동, 단열 노화 상태 1차 유선 진단'
     },
     {
       num: '02',
-      title: '현장 확인',
+      title: '무상 실사',
       icon: <MapPin className="w-5 h-5 text-brand-blue" />,
-      desc: '공장 부지, 동선, 전기/가스 인입 확인'
+      desc: '수석 엔지니어 현장 방문, 노체 전장 정밀 계측 및 정비 진단'
     },
     {
       num: '03',
-      title: '설계',
+      title: '설계/제안',
       icon: <Edit3 className="w-5 h-5 text-brand-blue" />,
-      desc: '3D CAD 및 열응력 맞춤 구조 설계'
+      desc: '필수 보수 및 개조 도면 검토, 상세 자재 투명 견적 제안'
     },
     {
       num: '04',
-      title: '제작',
+      title: '자재 준비',
       icon: <Hammer className="w-5 h-5 text-brand-blue" />,
-      desc: '정밀 제관 및 로체 프레임 견고 가공'
+      desc: '고품질 세라믹 파이버 및 국산 정품 가열체/PLC 전장 선별 가공'
     },
     {
       num: '05',
-      title: '조립',
+      title: '철저 시공',
       icon: <Settings className="w-5 h-5 text-brand-blue" />,
-      desc: '열선 배치, 단열 마감, PLC 제어반 배선'
+      desc: '노체 균열 특수 내열 용접 및 노후 발열체/단열재 전면 수리 교체'
     },
     {
       num: '06',
-      title: '설치',
+      title: '전장 개조',
       icon: <HardHat className="w-5 h-5 text-brand-blue" />,
-      desc: '현장 반입, 안착 및 안전 배관 최종 인입'
+      desc: '최신 PLC 자동 디지털 제어반 이식 배선 및 안전 센서 연동 시공'
     },
     {
       num: '07',
-      title: '시운전',
+      title: 'TUS 검증',
       icon: <Play className="w-5 h-5 text-brand-blue" />,
-      desc: '단계별 가열 및 최적 PID 동조 작동 테스팅'
+      desc: '승온 운전을 통한 온도 균질도(TUS) 테스트 및 미세 PID 동조 검사'
     },
     {
       num: '08',
-      title: 'A/S',
+      title: '사후 관리',
       icon: <LifeBuoy className="w-5 h-5 text-brand-blue" />,
-      desc: '문제 발생 시 즉각 출동, 신속 기술 지원'
+      desc: '밀착 정비 이력 관리 및 24시간 돌발 비상 기술 대응 지원'
     }
   ];
 
@@ -63,11 +63,11 @@ export default function ProcessTimeline() {
         <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
           <p className="text-xs text-brand-blue font-bold uppercase tracking-widest">Workflow Timeline</p>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-navy tracking-tight">
-            체계적이고 완벽한 8단계 제작 과정
+            신속하고 완벽한 8단계 유지보수 및 개조 절차
           </h2>
           <div className="h-1 w-12 bg-brand-blue mx-auto rounded-full" />
           <p className="text-slate-500 text-sm sm:text-base leading-relaxed font-medium">
-            첫 만남부터 설계, 시운전, 평생의 유지보수까지 모든 과정을 당사 기술진이 투명하고 엄격하게 책임 제조합니다.
+            돌발 고장 현상 진단부터 무상 실사, 맞춤 보수 설계, 정밀 부품 시공, TUS(온도 균질도) 최종 측정 검증까지 전 과정을 투명하게 책임 완수합니다.
           </p>
         </div>
 
