@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { PortfolioItem, Inquiry } from '../types';
-import { getStoredPortfolio, savePortfolio, getStoredInquiries, saveInquiries, INITIAL_PORTFOLIO } from '../data';
-import { Lock, Plus, Trash2, Edit, Save, X, Eye, FileText, CheckCircle2, RefreshCw, Star, Info, Hammer, Sparkles, MessageSquare, Flame, Upload, ImageIcon, Download, Clipboard, Check } from 'lucide-react';
+import { PortfolioItem, Inquiry, SiteSettings } from '../types';
+import { getStoredPortfolio, savePortfolio, getStoredInquiries, saveInquiries, INITIAL_PORTFOLIO, saveSiteSettings } from '../data';
+import { Lock, Plus, Trash2, Edit, Save, X, Eye, FileText, CheckCircle2, RefreshCw, Star, Info, Hammer, Sparkles, MessageSquare, Flame, Upload, ImageIcon, Download, Clipboard, Check, Settings, ShieldCheck, AlignLeft, Building2 } from 'lucide-react';
 
 interface AdminPanelProps {
   portfolio: PortfolioItem[];
@@ -9,6 +9,8 @@ interface AdminPanelProps {
   onUpdatePortfolio: (updated: PortfolioItem[]) => void;
   onUpdateInquiries: (updated: Inquiry[]) => void;
   onClose: () => void;
+  siteSettings: SiteSettings;
+  onUpdateSiteSettings: (updated: SiteSettings) => void;
 }
 
 const compressImage = (file: File): Promise<string> => {
@@ -54,10 +56,60 @@ export default function AdminPanel({
   inquiries,
   onUpdatePortfolio,
   onUpdateInquiries,
-  onClose
+  onClose,
+  siteSettings,
+  onUpdateSiteSettings
 }: AdminPanelProps) {
-  const [activeTab, setActiveTab] = useState<'portfolio' | 'inquiries'>('portfolio');
+  const [activeTab, setActiveTab] = useState<'portfolio' | 'inquiries' | 'siteSettings'>('portfolio');
   
+  // Site Settings Form States
+  const [settingsCompany, setSettingsCompany] = useState(siteSettings.companyName || '');
+  const [settingsRepresentative, setSettingsRepresentative] = useState(siteSettings.ceoName || '');
+  const [settingsEstablishedYear, setSettingsEstablishedYear] = useState(siteSettings.establishedYear || '1988');
+  const [settingsRegNumber, setSettingsRegNumber] = useState(siteSettings.businessNumber || '');
+  const [settingsAddress, setSettingsAddress] = useState(siteSettings.address || '');
+  const [settingsFax, setSettingsFax] = useState(siteSettings.fax || '');
+  const [settingsEmail, setSettingsEmail] = useState(siteSettings.email || '');
+  const [settingsPhone, setSettingsPhone] = useState(siteSettings.phone || '');
+  
+  const [settingsHeroBadge, setSettingsHeroBadge] = useState(siteSettings.heroBadge || '');
+  const [settingsHeroTitle, setSettingsHeroTitle] = useState(siteSettings.heroTitle || '');
+  const [settingsHeroSubtitle, setSettingsHeroSubtitle] = useState(siteSettings.heroSubtitle || '');
+  const [settingsHeroImage, setSettingsHeroImage] = useState(siteSettings.heroImage || '');
+  
+  const [settingsIntroTitle, setSettingsIntroTitle] = useState(siteSettings.introTitle || '');
+  const [settingsIntroText1, setSettingsIntroText1] = useState(siteSettings.introText1 || '');
+  const [settingsIntroText2, setSettingsIntroText2] = useState(siteSettings.introText2 || '');
+  const [settingsIntroQuote, setSettingsIntroQuote] = useState(siteSettings.introQuote || '');
+  
+  // Highlights 및 Partners 편집용 상태
+  const [settingsHighlights, setSettingsHighlights] = useState(siteSettings.introHighlights || []);
+  const [settingsPartners, setSettingsPartners] = useState(siteSettings.partners || []);
+
+  const [newPartnerName, setNewPartnerName] = useState('');
+  const [newPartnerSector, setNewPartnerSector] = useState('');
+  const [newPartnerDesc, setNewPartnerDesc] = useState('');
+  const [newPartnerTag, setNewPartnerTag] = useState('자동차 부품');
+
+  // Server upload helper for images
+  const uploadToServer = async (base64Image: string): Promise<string> => {
+    try {
+      const res = await fetch('/api/upload-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: base64Image })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return data.url;
+      }
+      return base64Image;
+    } catch (err) {
+      console.error('Failed uploading image to server, falling back to base64:', err);
+      return base64Image;
+    }
+  };
+
   // Portfolio CRUD States
   const [editingItem, setEditingItem] = useState<PortfolioItem | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
@@ -141,18 +193,19 @@ export default function AdminPanel({
     const files = e.target.files;
     if (!files) return;
     
-    const compressedImages: string[] = [];
+    const uploadedUrls: string[] = [];
     for (let i = 0; i < files.length; i++) {
       try {
         const compressed = await compressImage(files[i]);
-        compressedImages.push(compressed);
+        const url = await uploadToServer(compressed);
+        uploadedUrls.push(url);
       } catch (error) {
-        console.error('이미지 압축 중 오류 발생:', error);
+        console.error('이미지 압축 또는 업로드 중 오류 발생:', error);
       }
     }
     
-    if (compressedImages.length > 0) {
-      setFormImages(prev => [...prev, ...compressedImages]);
+    if (uploadedUrls.length > 0) {
+      setFormImages(prev => [...prev, ...uploadedUrls]);
     }
     // Reset target value so same files can be re-uploaded if needed
     e.target.value = '';
@@ -174,18 +227,19 @@ export default function AdminPanel({
     const files = e.dataTransfer.files;
     if (!files) return;
     
-    const compressedImages: string[] = [];
+    const uploadedUrls: string[] = [];
     for (let i = 0; i < files.length; i++) {
       try {
         const compressed = await compressImage(files[i]);
-        compressedImages.push(compressed);
+        const url = await uploadToServer(compressed);
+        uploadedUrls.push(url);
       } catch (error) {
-        console.error('이미지 압축 중 오류 발생:', error);
+        console.error('이미지 압축 또는 업로드 중 오류 발생:', error);
       }
     }
     
-    if (compressedImages.length > 0) {
-      setFormImages(prev => [...prev, ...compressedImages]);
+    if (uploadedUrls.length > 0) {
+      setFormImages(prev => [...prev, ...uploadedUrls]);
     }
   };
 
@@ -306,6 +360,13 @@ export default function AdminPanel({
 
     savePortfolio(updatedList);
     onUpdatePortfolio(updatedList);
+
+    // Sync with backend Express Server to write file in repository
+    fetch('/api/portfolio', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedList)
+    }).catch(err => console.error('Failed to sync portfolio to server:', err));
     
     // Reset form state
     setEditingItem(null);
@@ -318,6 +379,14 @@ export default function AdminPanel({
       const updated = portfolio.filter(item => item.id !== id);
       savePortfolio(updated);
       onUpdatePortfolio(updated);
+      
+      // Sync with backend Express Server to write file in repository
+      fetch('/api/portfolio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+      }).catch(err => console.error('Failed to sync deleted portfolio to server:', err));
+
       if (editingItem?.id === id) {
         setEditingItem(null);
       }
@@ -329,6 +398,14 @@ export default function AdminPanel({
     if (confirm('샘플 포트폴리오 데이터(5개 기본 내역)로 복원하시겠습니까? (추가하신 내역은 사라집니다)')) {
       savePortfolio(INITIAL_PORTFOLIO);
       onUpdatePortfolio(INITIAL_PORTFOLIO);
+
+      // Sync with backend Express Server to write file in repository
+      fetch('/api/portfolio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(INITIAL_PORTFOLIO)
+      }).catch(err => console.error('Failed to sync restored portfolio to server:', err));
+
       setEditingItem(null);
       setIsAddingNew(false);
     }
@@ -355,6 +432,98 @@ export default function AdminPanel({
       const updated = inquiries.filter(inq => inq.id !== id);
       saveInquiries(updated);
       onUpdateInquiries(updated);
+    }
+  };
+
+  // Save All Site Settings
+  const handleSaveSettings = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const updatedSettings: SiteSettings = {
+      companyName: settingsCompany,
+      ceoName: settingsRepresentative,
+      establishedYear: settingsEstablishedYear,
+      phone: settingsPhone,
+      fax: settingsFax,
+      email: settingsEmail,
+      address: settingsAddress,
+      businessNumber: settingsRegNumber,
+      
+      heroTitle: settingsHeroTitle,
+      heroSubtitle: settingsHeroSubtitle,
+      heroImage: settingsHeroImage,
+      heroBadge: settingsHeroBadge,
+      
+      introTitle: settingsIntroTitle,
+      introText1: settingsIntroText1,
+      introText2: settingsIntroText2,
+      introQuote: settingsIntroQuote,
+      introHighlights: settingsHighlights,
+      
+      partners: settingsPartners
+    };
+    
+    saveSiteSettings(updatedSettings);
+    onUpdateSiteSettings(updatedSettings);
+    
+    // Save to server
+    try {
+      const res = await fetch('/api/site-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedSettings)
+      });
+      if (res.ok) {
+        alert('홈페이지 전체 정보가 완벽히 저장되었습니다! 이 데이터는 깃허브에 영구 저장 가능하도록 기록되었습니다.');
+      } else {
+        alert('브라우저에는 임시 저장되었으나, 서버 파일 저장에 실패했습니다.');
+      }
+    } catch (err) {
+      console.error('Failed to save settings to server:', err);
+      alert('서버 연결 실패로 로컬 브라우저에만 저장되었습니다.');
+    }
+  };
+
+  // Upload Hero image background
+  const handleHeroImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    try {
+      const compressed = await compressImage(files[0]);
+      const url = await uploadToServer(compressed);
+      setSettingsHeroImage(url);
+    } catch (err) {
+      console.error('Hero 이미지 업로드 실패:', err);
+    }
+  };
+
+  // Manage highlights inline
+  const handleHighlightChange = (index: number, field: 'title' | 'desc', value: string) => {
+    setSettingsHighlights(prev => prev.map((hl, i) => i === index ? { ...hl, [field]: value } : hl));
+  };
+
+  // Manage Partners
+  const handleAddPartner = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newPartnerName.trim() || !newPartnerSector.trim()) return;
+    
+    const newPartner = {
+      id: `part-${Date.now()}`,
+      name: newPartnerName,
+      sector: newPartnerSector,
+      desc: newPartnerDesc,
+      tag: newPartnerTag
+    };
+    
+    setSettingsPartners(prev => [...prev, newPartner]);
+    setNewPartnerName('');
+    setNewPartnerSector('');
+    setNewPartnerDesc('');
+  };
+
+  const handleRemovePartner = (id: string) => {
+    if (confirm('이 거래처를 목록에서 삭제하시겠습니까?')) {
+      setSettingsPartners(prev => prev.filter(p => p.id !== id));
     }
   };
 
@@ -448,6 +617,29 @@ export default function AdminPanel({
                     : (activeTab === 'inquiries' ? 'bg-blue-700 text-white font-bold' : 'bg-gray-light border border-line text-slate-500 font-bold')
                 }`}>
                   {inquiries.length}
+                </span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab('siteSettings');
+                  setEditingItem(null);
+                  setIsAddingNew(false);
+                }}
+                className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-extrabold tracking-tight transition-all cursor-pointer ${
+                  activeTab === 'siteSettings'
+                    ? 'bg-brand-blue text-white font-bold'
+                    : 'text-slate-500 hover:text-navy hover:bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center space-x-2">
+                  <Settings className="w-4 h-4 text-brand-orange animate-spin-slow" />
+                  <span>홈페이지 전체 보수 관리</span>
+                </div>
+                <span className={`px-2 py-0.5 rounded text-[10px] ${
+                  activeTab === 'siteSettings' ? 'bg-blue-700 text-white font-bold' : 'bg-gray-light border border-line text-slate-500 font-bold'
+                }`}>
+                  실시간
                 </span>
               </button>
             </div>
@@ -903,6 +1095,378 @@ export default function AdminPanel({
 
                 </div>
 
+              </div>
+            )}
+
+            {/* TAB 3: Website Site Settings Administration */}
+            {activeTab === 'siteSettings' && (
+              <div className="space-y-6">
+                <form onSubmit={handleSaveSettings} className="space-y-6">
+                  
+                  {/* Card 1: Company Contact & Metadata */}
+                  <div className="bg-white border border-line rounded-3xl p-6 space-y-4 shadow-sm">
+                    <div className="border-b border-line pb-3">
+                      <h3 className="text-sm font-bold text-navy flex items-center gap-1.5">
+                        <Building2 className="w-4 h-4 text-brand-blue" />
+                        <span>회사 기본 정보 관리</span>
+                      </h3>
+                      <p className="text-[10px] text-slate-400 mt-1">회사명, 연락처, 주소 등 사업자 필수 메타데이터를 관리합니다.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-navy">상호명 (회사명) *</label>
+                        <input
+                          type="text"
+                          required
+                          value={settingsCompany}
+                          onChange={(e) => setSettingsCompany(e.target.value)}
+                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-navy">대표자명 *</label>
+                        <input
+                          type="text"
+                          required
+                          value={settingsRepresentative}
+                          onChange={(e) => setSettingsRepresentative(e.target.value)}
+                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-navy">대표 전화번호 (직통) *</label>
+                        <input
+                          type="text"
+                          required
+                          value={settingsPhone}
+                          onChange={(e) => setSettingsPhone(e.target.value)}
+                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-navy">팩스 번호 (FAX) *</label>
+                        <input
+                          type="text"
+                          required
+                          value={settingsFax}
+                          onChange={(e) => setSettingsFax(e.target.value)}
+                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-navy">이메일 주소 *</label>
+                        <input
+                          type="email"
+                          required
+                          value={settingsEmail}
+                          onChange={(e) => setSettingsEmail(e.target.value)}
+                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-navy">사업자 등록번호 *</label>
+                        <input
+                          type="text"
+                          required
+                          value={settingsRegNumber}
+                          onChange={(e) => setSettingsRegNumber(e.target.value)}
+                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-navy">회사 사업장 주소 *</label>
+                      <input
+                        type="text"
+                        required
+                        value={settingsAddress}
+                        onChange={(e) => setSettingsAddress(e.target.value)}
+                        className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Card 2: Hero Main Banner Section */}
+                  <div className="bg-white border border-line rounded-3xl p-6 space-y-4 shadow-sm">
+                    <div className="border-b border-line pb-3">
+                      <h3 className="text-sm font-bold text-navy flex items-center gap-1.5">
+                        <ImageIcon className="w-4 h-4 text-brand-orange" />
+                        <span>메인 히어로 배너 관리</span>
+                      </h3>
+                      <p className="text-[10px] text-slate-400 mt-1">홈페이지 메인 대형 슬라이드 및 슬로건을 변경합니다.</p>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-navy">히어로 슬림 배지 텍스트 *</label>
+                      <input
+                        type="text"
+                        required
+                        value={settingsHeroBadge}
+                        onChange={(e) => setSettingsHeroBadge(e.target.value)}
+                        className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-navy">메인 메세지 타이틀 *</label>
+                        <input
+                          type="text"
+                          required
+                          value={settingsHeroTitle}
+                          onChange={(e) => setSettingsHeroTitle(e.target.value)}
+                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-navy">서브 카피 설명 문구 *</label>
+                        <input
+                          type="text"
+                          required
+                          value={settingsHeroSubtitle}
+                          onChange={(e) => setSettingsHeroSubtitle(e.target.value)}
+                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-3 bg-gray-light/50 border border-line p-4 rounded-2xl">
+                      <label className="text-xs font-bold text-navy flex items-center gap-1.5">
+                        <Upload className="w-4 h-4 text-brand-blue" />
+                        <span>메인 대형 배경 사진 업로드 (Vite 및 GitHub 저장) *</span>
+                      </label>
+                      <div className="flex flex-col sm:flex-row gap-4 items-center">
+                        <img
+                          src={settingsHeroImage}
+                          alt="Hero Preview"
+                          className="w-full sm:w-48 aspect-video object-cover rounded-xl border border-line bg-white shrink-0"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="space-y-2 w-full">
+                          <input
+                            type="file"
+                            id="hero-file-upload"
+                            accept="image/*"
+                            onChange={handleHeroImageUpload}
+                            className="hidden"
+                          />
+                          <label
+                            htmlFor="hero-file-upload"
+                            className="inline-flex items-center gap-1.5 bg-brand-blue hover:bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer"
+                          >
+                            <Upload className="w-3.5 h-3.5" />
+                            <span>새 배경 사진 업로드</span>
+                          </label>
+                          <p className="text-[10px] text-slate-400">
+                            * 가로형 고해상도(1920x1080급) 실제 공장 설비 사진을 업로드하시면 홈페이지의 전면 배경이 변경됩니다.
+                          </p>
+                          <input
+                            type="text"
+                            placeholder="이미지 주소(URL) 직접 입력도 가능"
+                            value={settingsHeroImage}
+                            onChange={(e) => setSettingsHeroImage(e.target.value)}
+                            className="w-full bg-white border border-line text-navy rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-blue font-semibold"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card 3: Brand Core Introduces */}
+                  <div className="bg-white border border-line rounded-3xl p-6 space-y-4 shadow-sm">
+                    <div className="border-b border-line pb-3">
+                      <h3 className="text-sm font-bold text-navy flex items-center gap-1.5">
+                        <AlignLeft className="w-4 h-4 text-brand-blue" />
+                        <span>브랜드 코어 및 소개 문구 관리</span>
+                      </h3>
+                      <p className="text-[10px] text-slate-400 mt-1">회사 소개 섹션의 전문 및 요약 명언 카피를 관리합니다.</p>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-navy">소개 타이틀 *</label>
+                      <input
+                        type="text"
+                        required
+                        value={settingsIntroTitle}
+                        onChange={(e) => setSettingsIntroTitle(e.target.value)}
+                        className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-navy">상세 본문 단락 1 *</label>
+                        <textarea
+                          required
+                          rows={4}
+                          value={settingsIntroText1}
+                          onChange={(e) => setSettingsIntroText1(e.target.value)}
+                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-bold text-navy">상세 본문 단락 2 *</label>
+                        <textarea
+                          required
+                          rows={4}
+                          value={settingsIntroText2}
+                          onChange={(e) => setSettingsIntroText2(e.target.value)}
+                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-bold text-navy">대표 명언 카피 (인용구) *</label>
+                      <textarea
+                        required
+                        rows={2}
+                        value={settingsIntroQuote}
+                        onChange={(e) => setSettingsIntroQuote(e.target.value)}
+                        className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
+                      />
+                    </div>
+
+                    {/* Highlights Sub-section */}
+                    <div className="space-y-3 pt-3 border-t border-line">
+                      <p className="text-xs font-bold text-navy">핵심 강점 서브 타이틀 관리 (2개 핵심 팩트)</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {settingsHighlights.map((hl, idx) => (
+                          <div key={idx} className="bg-gray-light/30 border border-line p-4 rounded-2xl space-y-2">
+                            <p className="text-[10px] text-brand-orange font-bold">팩트 강점 #{idx + 1}</p>
+                            <input
+                              type="text"
+                              required
+                              placeholder="강점 요약 타이틀"
+                              value={hl.title}
+                              onChange={(e) => handleHighlightChange(idx, 'title', e.target.value)}
+                              className="w-full bg-white border border-line text-navy rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-blue font-bold"
+                            />
+                            <textarea
+                              required
+                              rows={2}
+                              placeholder="세부 사실에 대한 간결한 설명"
+                              value={hl.desc}
+                              onChange={(e) => handleHighlightChange(idx, 'desc', e.target.value)}
+                              className="w-full bg-white border border-line text-navy rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-blue font-semibold"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card 4: Client Partners Directory Management */}
+                  <div className="bg-white border border-line rounded-3xl p-6 space-y-4 shadow-sm">
+                    <div className="border-b border-line pb-3">
+                      <h3 className="text-sm font-bold text-navy flex items-center gap-1.5">
+                        <ShieldCheck className="w-4 h-4 text-brand-blue" />
+                        <span>주요 파트너 및 거래처 디렉토리 관리</span>
+                      </h3>
+                      <p className="text-[10px] text-slate-400 mt-1">대기업 파트너십 목록을 관리하고 실시간으로 추가/제거합니다.</p>
+                    </div>
+
+                    {/* Form to add partner inline */}
+                    <div className="bg-gray-light/40 border border-line p-4 rounded-2xl space-y-3">
+                      <p className="text-[10px] font-bold text-brand-blue">신규 주요 거래사 추가 양식</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <input
+                          type="text"
+                          placeholder="거래사 상호명 (예: 주식회사 선일)"
+                          value={newPartnerName}
+                          onChange={(e) => setNewPartnerName(e.target.value)}
+                          className="bg-white border border-line text-navy rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-blue font-bold"
+                        />
+                        <input
+                          type="text"
+                          placeholder="주력 제조 분야 (예: 자동차 특수 볼트)"
+                          value={newPartnerSector}
+                          onChange={(e) => setNewPartnerSector(e.target.value)}
+                          className="bg-white border border-line text-navy rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-blue font-bold"
+                        />
+                        <select
+                          value={newPartnerTag}
+                          onChange={(e) => setNewPartnerTag(e.target.value)}
+                          className="bg-white border border-line text-navy rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-blue font-bold"
+                        >
+                          <option value="자동차 부품">자동차 부품</option>
+                          <option value="정밀 포징">정밀 포징</option>
+                          <option value="체결 부품">체결 부품</option>
+                          <option value="정밀 베어링">정밀 베어링</option>
+                          <option value="글로벌 스탠다드">글로벌 스탠다드</option>
+                          <option value="정밀 단조">정밀 단조</option>
+                          <option value="방위 산업 / 기어">방위 산업 / 기어</option>
+                        </select>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="거래 파트너사에 대한 세부적인 한 줄 부연설명 기술"
+                        value={newPartnerDesc}
+                        onChange={(e) => setNewPartnerDesc(e.target.value)}
+                        className="w-full bg-white border border-line text-navy rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-brand-blue font-medium"
+                      />
+                      <div className="flex justify-end">
+                        <button
+                          type="button"
+                          onClick={handleAddPartner}
+                          className="bg-navy hover:bg-slate-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shadow-sm"
+                        >
+                          거래처 리스트 추가
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Listing of current partners */}
+                    <div className="space-y-2.5 max-h-96 overflow-y-auto pr-1">
+                      <p className="text-[10px] text-slate-400 font-bold uppercase">현재 등록된 주요 거래 리스트 ({settingsPartners.length}개)</p>
+                      <div className="divide-y divide-line">
+                        {settingsPartners.map((partner) => (
+                          <div key={partner.id} className="py-2.5 flex items-center justify-between gap-4">
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-1.5 flex-wrap">
+                                <h4 className="text-xs font-bold text-navy truncate">{partner.name}</h4>
+                                <span className="bg-brand-blue/10 text-brand-blue text-[9px] font-extrabold px-1.5 py-0.5 rounded">
+                                  {partner.tag}
+                                </span>
+                              </div>
+                              <p className="text-[10px] text-slate-500 mt-1 truncate">{partner.sector} - {partner.desc}</p>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => handleRemovePartner(partner.id)}
+                              className="text-red-500 hover:text-red-600 text-xs font-bold shrink-0 p-1 cursor-pointer"
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Global Save Button bar */}
+                  <div className="bg-slate-900 border border-slate-800 rounded-3xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md text-white">
+                    <div>
+                      <h4 className="text-xs font-bold flex items-center gap-1">
+                        <Sparkles className="w-3.5 h-3.5 text-brand-orange" />
+                        <span>전체 변경 내용 영구 승인</span>
+                      </h4>
+                      <p className="text-[10px] text-slate-400 mt-1">
+                        위 기입하신 브랜드 정보와 업로드 이미지들은 즉각 적용되어 깃허브 레포지토리 파일로 동기화됩니다.
+                      </p>
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full sm:w-auto flex items-center justify-center gap-1.5 bg-brand-orange hover:bg-orange-600 text-white px-8 py-3.5 rounded-xl text-xs font-extrabold transition-all shadow-md cursor-pointer shrink-0"
+                    >
+                      <Save className="w-4 h-4" />
+                      <span>홈페이지 전체 설정 저장 완료</span>
+                    </button>
+                  </div>
+
+                </form>
               </div>
             )}
 

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { getStoredInquiries, saveInquiries } from '../data';
-import { Inquiry } from '../types';
+import { Inquiry, SiteSettings } from '../types';
 import { CheckCircle2, PhoneCall, MapPin, FileText, Send, Sparkles, AlertCircle, RefreshCw, Star } from 'lucide-react';
 
 interface CustomerInquiryProps {
   preselectedModel: string;
   onClearPreselect: () => void;
+  siteSettings: SiteSettings;
 }
 
-export default function CustomerInquiry({ preselectedModel, onClearPreselect }: CustomerInquiryProps) {
+export default function CustomerInquiry({ preselectedModel, onClearPreselect, siteSettings }: CustomerInquiryProps) {
   const [companyName, setCompanyName] = useState('');
   const [contactPerson, setContactPerson] = useState('');
   const [phone, setPhone] = useState('');
@@ -191,7 +192,7 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 font-bold">전화 직통 기술 상담 (평일/주말 상시 대응)</p>
-                  <p className="text-lg sm:text-xl font-extrabold text-navy tracking-tight mt-1">031-497-7671</p>
+                  <p className="text-lg sm:text-xl font-extrabold text-navy tracking-tight mt-1">{siteSettings.phone}</p>
                 </div>
               </div>
 

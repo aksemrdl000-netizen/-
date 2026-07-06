@@ -24,3 +24,38 @@ export interface Inquiry {
   status: 'pending' | 'completed';
   createdAt: number;
 }
+
+export interface ClientPartner {
+  id: string;
+  name: string;
+  sector: string;
+  desc: string;
+  tag: string;
+}
+
+export interface SiteSettings {
+  companyName: string;
+  ceoName: string;
+  establishedYear: string;
+  phone: string;
+  fax: string;
+  email: string;
+  address: string;
+  businessNumber: string;
+  
+  // Hero Section
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImage: string;
+  heroBadge: string;
+  
+  // Company Intro
+  introTitle: string;
+  introText1: string;
+  introText2: string;
+  introQuote: string;
+  introHighlights: { title: string; desc: string }[];
+  
+  // Partners
+  partners: ClientPartner[];
+}

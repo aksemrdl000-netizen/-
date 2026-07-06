@@ -5,19 +5,19 @@ import WhyChooseUs from './components/WhyChooseUs';
 import CompanyIntro from './components/CompanyIntro';
 import ProcessTimeline from './components/ProcessTimeline';
 import Portfolio from './components/Portfolio';
-import TechnologyAndCompetitiveness from './components/TechnologyAndCompetitiveness';
-import CustomerInquiry from './components/CustomerInquiry';
+import Partners from './components/Partners';
 import AdminPanel from './components/AdminPanel';
 import Footer from './components/Footer';
 
-import { PortfolioItem, Inquiry } from './types';
-import { getStoredPortfolio, getStoredInquiries } from './data';
+import { PortfolioItem, Inquiry, SiteSettings } from './types';
+import { getStoredPortfolio, getStoredInquiries, getStoredSiteSettings } from './data';
 import { Lock, X, Check, ShieldAlert, ArrowRight, Flame } from 'lucide-react';
 
 export default function App() {
   // Database States
   const [portfolio, setPortfolio] = useState<PortfolioItem[]>([]);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [siteSettings, setSiteSettings] = useState<SiteSettings | null>(null);
 
   // UI States
   const [isAdmin, setIsAdmin] = useState(false);
@@ -33,8 +33,44 @@ export default function App() {
 
   // Load Initial Data
   useEffect(() => {
-    setPortfolio(getStoredPortfolio());
-    setInquiries(getStoredInquiries());
+    // Initial sync from local storage for instant render
+    const localPortfolio = getStoredPortfolio();
+    const localInquiries = getStoredInquiries();
+    const localSettings = getStoredSiteSettings();
+    setPortfolio(localPortfolio);
+    setInquiries(localInquiries);
+    setSiteSettings(localSettings);
+
+    // Fetch fresh data from backend server if available
+    const fetchServerData = async () => {
+      try {
+        const settingsRes = await fetch('/api/site-settings');
+        if (settingsRes.ok) {
+          const serverSettings = await settingsRes.json();
+          if (serverSettings) {
+            setSiteSettings(serverSettings);
+            localStorage.setItem('furnace_app_site_settings', JSON.stringify(serverSettings));
+          }
+        }
+      } catch (err) {
+        console.warn('Could not fetch site settings from server, using local cache:', err);
+      }
+
+      try {
+        const portfolioRes = await fetch('/api/portfolio');
+        if (portfolioRes.ok) {
+          const serverPortfolio = await portfolioRes.json();
+          if (serverPortfolio) {
+            setPortfolio(serverPortfolio);
+            localStorage.setItem('furnace_app_portfolio_items', JSON.stringify(serverPortfolio));
+          }
+        }
+      } catch (err) {
+        console.warn('Could not fetch portfolio from server, using local cache:', err);
+      }
+    };
+
+    fetchServerData();
   }, []);
 
   // Monitor Scroll to update active header nav item
@@ -42,7 +78,7 @@ export default function App() {
     if (isAdmin) return; // Disable scroll tracking while inside Admin Panel
 
     const handleScroll = () => {
-      const sections = ['home', 'why-us', 'process', 'portfolio', 'technology', 'inquiry'];
+      const sections = ['home', 'why-us', 'process', 'portfolio', 'partners'];
       const scrollPos = window.scrollY + 200;
 
       for (const section of sections) {
@@ -105,6 +141,10 @@ export default function App() {
     handleScrollTo('inquiry');
   };
 
+  if (!siteSettings) {
+    return <div className="min-h-screen bg-navy flex items-center justify-center text-white">로딩 중...</div>;
+  }
+
   return (
     <div className="bg-gray-light min-h-screen text-slate-700 font-sans selection:bg-brand-blue selection:text-white">
       
@@ -115,6 +155,7 @@ export default function App() {
         onLogout={handleAdminLogout}
         activeSection={activeSection}
         onNavigate={handleScrollTo}
+        siteSettings={siteSettings}
       />
 
       {/* Conditionally Render ADMIN PANEL or CORPORATE FRONTEND */}
@@ -125,17 +166,19 @@ export default function App() {
           onUpdatePortfolio={setPortfolio}
           onUpdateInquiries={setInquiries}
           onClose={handleAdminLogout}
+          siteSettings={siteSettings}
+          onUpdateSiteSettings={setSiteSettings}
         />
       ) : (
         <main>
           {/* Section 2: Hero Section */}
-          <Hero onScrollTo={handleScrollTo} />
+          <Hero onScrollTo={handleScrollTo} siteSettings={siteSettings} />
 
           {/* Section 3: Why Choose Us (우리를 선택해야 하는 이유) */}
-          <WhyChooseUs />
+          <WhyChooseUs siteSettings={siteSettings} />
 
           {/* Section 4: Company Intro (회사 소개) */}
-          <CompanyIntro />
+          <CompanyIntro siteSettings={siteSettings} />
 
           {/* Section 5: Manufacturing Process Timeline (제작 과정) */}
           <ProcessTimeline />
@@ -146,19 +189,13 @@ export default function App() {
             onSelectProjectForQuote={handleSelectProjectForQuote}
           />
 
-          {/* Section 7 & 8: Technology & Competitiveness (기술력 및 경쟁력 비교표) */}
-          <TechnologyAndCompetitiveness />
-
-          {/* Section 9 & 10: Customer Value & Inquiry Form (가치 및 견적 의뢰) */}
-          <CustomerInquiry
-            preselectedModel={preselectedModel}
-            onClearPreselect={() => setPreselectedModel('')}
-          />
+          {/* Section 6.5: Main Clients (주요 거래처) */}
+          <Partners siteSettings={siteSettings} />
         </main>
       )}
 
       {/* Footer Section (Includes Business Meta details & Kakao Link) */}
-      <Footer />
+      <Footer siteSettings={siteSettings} />
 
       {/* Secure Admin Access Modal Password Dialog */}
       {showPasswordModal && (

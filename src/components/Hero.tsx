@@ -1,12 +1,14 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Flame, ChevronRight, FileText, ArrowRight } from 'lucide-react';
+import { Flame, ChevronRight, FileText, ArrowRight, PhoneCall } from 'lucide-react';
+import { SiteSettings } from '../types';
 
 interface HeroProps {
   onScrollTo: (elementId: string) => void;
+  siteSettings: SiteSettings;
 }
 
-export default function Hero({ onScrollTo }: HeroProps) {
+export default function Hero({ onScrollTo, siteSettings }: HeroProps) {
   const steps = ['노후 진단', '보수 설계', '부품 교체', '단열/제어 보강', '정기 점검'];
 
   return (
@@ -17,9 +19,10 @@ export default function Hero({ onScrollTo }: HeroProps) {
       {/* Background Industrial Image with Dark Vignette Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1920&q=80"
+          src={siteSettings.heroImage || "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1920&q=80"}
           alt="산업용 열처리 공장"
           className="w-full h-full object-cover object-center opacity-25 scale-105"
+          referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/80 to-navy/95" />
         {/* Subtle blue radial glows representing heat/furnace */}
@@ -41,7 +44,7 @@ export default function Hero({ onScrollTo }: HeroProps) {
               className="inline-flex items-center space-x-2 bg-brand-blue/10 border border-brand-blue/30 px-4 py-2 rounded-full text-brand-blue text-xs sm:text-sm font-bold tracking-wide"
             >
               <Flame className="w-4 h-4 text-brand-orange animate-pulse" />
-              <span className="text-slate-200">안전하고 완벽한 열처리로 유지보수·개조·정비</span>
+              <span className="text-slate-200">{siteSettings.heroBadge}</span>
             </motion.div>
 
             {/* Slogans */}
@@ -52,10 +55,7 @@ export default function Hero({ onScrollTo }: HeroProps) {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight"
               >
-                열처리로 유지보수 <br className="sm:hidden" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-sky-400 to-brand-orange">
-                  및 개조 전문
-                </span>
+                {siteSettings.heroTitle}
               </motion.h1>
 
               <motion.p
@@ -64,7 +64,7 @@ export default function Hero({ onScrollTo }: HeroProps) {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-lg sm:text-xl text-slate-200 font-medium max-w-2xl leading-relaxed"
               >
-                기존 노후 설비 개조부터 부품 교체, 단열 보강, 제어 튜닝까지 완벽 복원
+                {siteSettings.heroSubtitle}
               </motion.p>
             </div>
 
@@ -108,13 +108,13 @@ export default function Hero({ onScrollTo }: HeroProps) {
                 <span>보수·개조 실적 보기</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button
-                onClick={() => onScrollTo('inquiry')}
+              <a
+                href="tel:031-497-7671"
                 className="flex items-center justify-center space-x-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-8 py-4 rounded-xl border border-transparent transition-all duration-200 cursor-pointer shadow-lg shadow-brand-orange/10"
               >
-                <FileText className="w-5 h-5 text-white" />
-                <span>유지보수·개조 문의</span>
-              </button>
+                <PhoneCall className="w-5 h-5 text-white animate-pulse" />
+                <span>직통 전화 문의 (031-497-7671)</span>
+              </a>
             </motion.div>
 
           </div>

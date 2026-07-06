@@ -1,7 +1,12 @@
 import React from 'react';
 import { Award, ShieldCheck, DollarSign, CheckCircle2 } from 'lucide-react';
+import { SiteSettings } from '../types';
 
-export default function WhyChooseUs() {
+interface WhyChooseUsProps {
+  siteSettings: SiteSettings;
+}
+
+export default function WhyChooseUs({ siteSettings }: WhyChooseUsProps) {
   const cards = [
     {
       title: '실력 (Skill)',
@@ -59,7 +64,7 @@ export default function WhyChooseUs() {
           </h2>
           <div className="h-1 w-12 bg-brand-orange mx-auto rounded-full" />
           <p className="text-slate-500 text-sm sm:text-base leading-relaxed font-medium">
-            기존 설비의 경제성과 가동 안전성을 최고 수준으로 끌어올리는 광성산업만의 약속입니다.
+            기존 설비의 경제성과 가동 안전성을 최고 수준으로 끌어올리는 {siteSettings.companyName}만의 약속입니다.
           </p>
         </div>
 

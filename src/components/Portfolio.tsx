@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PortfolioItem } from '../types';
-import { Clock, Thermometer, Maximize2, CheckCircle, ArrowUpRight, Sparkles, X, FileText } from 'lucide-react';
+import { Clock, Thermometer, Maximize2, CheckCircle, ArrowUpRight, Sparkles, X, FileText, PhoneCall } from 'lucide-react';
 
 interface PortfolioProps {
   items: PortfolioItem[];
@@ -212,16 +212,13 @@ export default function Portfolio({ items, onSelectProjectForQuote }: PortfolioP
 
             {/* Modal Action Buttons */}
             <div className="p-6 bg-gray-light border-t border-line flex flex-col sm:flex-row gap-3">
-              <button
-                onClick={() => {
-                  onSelectProjectForQuote(selectedItem.title);
-                  setSelectedItem(null);
-                }}
-                className="flex-1 flex items-center justify-center gap-2 bg-brand-blue hover:bg-blue-600 text-white font-bold py-3.5 rounded-xl text-xs sm:text-sm shadow shadow-brand-blue/10 transition-all cursor-pointer"
+              <a
+                href="tel:031-497-7671"
+                className="flex-1 flex items-center justify-center gap-2 bg-brand-blue hover:bg-blue-600 text-white font-bold py-3.5 rounded-xl text-xs sm:text-sm shadow shadow-brand-blue/10 transition-all cursor-pointer text-center"
               >
-                <FileText className="w-4.5 h-4.5" />
-                <span>이 모델 기준으로 무료 견적 문의하기</span>
-              </button>
+                <PhoneCall className="w-4.5 h-4.5 text-white animate-pulse" />
+                <span>직통 전화 문의 (031-497-7671)</span>
+              </a>
               <button
                 onClick={() => setSelectedItem(null)}
                 className="px-6 py-3.5 bg-white hover:bg-slate-50 text-slate-600 hover:text-navy rounded-xl text-xs sm:text-sm font-bold border border-line transition-all cursor-pointer"

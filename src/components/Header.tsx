@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Flame, Lock, LogOut, Menu, X, PhoneCall } from 'lucide-react';
+import KwangSungLogo from './KwangSungLogo';
+import { SiteSettings } from '../types';
 
 interface HeaderProps {
   isAdmin: boolean;
@@ -7,6 +9,7 @@ interface HeaderProps {
   onLogout: () => void;
   activeSection: string;
   onNavigate: (sectionId: string) => void;
+  siteSettings: SiteSettings;
 }
 
 export default function Header({
@@ -14,7 +17,8 @@ export default function Header({
   onAdminToggle,
   onLogout,
   activeSection,
-  onNavigate
+  onNavigate,
+  siteSettings
 }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,8 +36,7 @@ export default function Header({
     { id: 'why-us', label: '핵심경쟁력' },
     { id: 'process', label: '정비절차' },
     { id: 'portfolio', label: '보수실적' },
-    { id: 'technology', label: '정비기술력' },
-    { id: 'inquiry', label: '정비문의' },
+    { id: 'partners', label: '주요거래처' },
   ];
 
   const handleItemClick = (id: string) => {
@@ -55,18 +58,15 @@ export default function Header({
           {/* Logo */}
           <div
             id="header-logo"
-            className="flex items-center space-x-2 cursor-pointer"
+            className="flex items-center space-x-3 cursor-pointer"
             onClick={() => handleItemClick('home')}
           >
-            <div className="bg-brand-blue p-2 rounded-lg flex items-center justify-center shadow-md">
-              <Flame className="w-5 h-5 text-brand-orange animate-pulse" />
+            <div className="flex items-center h-11 md:h-12 py-1">
+              <KwangSungLogo height="100%" />
             </div>
-            <div>
-              <span className="font-display font-extrabold text-xl tracking-tight text-navy flex items-center gap-1.5 leading-none">
-                광성산업 <span className="text-brand-orange text-[10px] px-1.5 py-0.5 bg-brand-orange/5 border border-brand-orange/20 rounded font-bold">열처리로 전문</span>
-              </span>
-              <p className="text-[10px] text-brand-blue font-bold tracking-wider uppercase mt-1">Industrial Furnace Technology</p>
-            </div>
+            <span className="hidden sm:inline-block text-brand-orange text-[10px] px-1.5 py-0.5 bg-brand-orange/5 border border-brand-orange/20 rounded font-bold">
+              열처리로 전문
+            </span>
           </div>
 
           {/* Desktop Nav */}
@@ -89,12 +89,12 @@ export default function Header({
           {/* Utility Buttons */}
           <div className="hidden md:flex items-center space-x-3">
             <a
-              href="tel:031-497-7671"
+              href={`tel:${siteSettings.phone}`}
               id="header-phone-btn"
               className="flex items-center space-x-1.5 bg-slate-50 border border-line hover:border-brand-blue/50 text-slate-700 hover:text-navy px-3.5 py-2 rounded-lg text-xs font-bold transition-all"
             >
               <PhoneCall className="w-3.5 h-3.5 text-brand-blue" />
-              <span>031-497-7671</span>
+              <span>{siteSettings.phone}</span>
             </a>
 
             {isAdmin ? (
@@ -160,11 +160,11 @@ export default function Header({
 
           <div className="pt-4 border-t border-line flex flex-col space-y-2">
             <a
-              href="tel:031-497-7671"
+              href={`tel:${siteSettings.phone}`}
               className="flex items-center justify-center space-x-2 bg-slate-50 border border-line text-slate-700 py-3 rounded-lg text-xs sm:text-sm font-bold"
             >
               <PhoneCall className="w-4 h-4 text-brand-blue" />
-              <span>031-497-7671 (전화상담)</span>
+              <span>{siteSettings.phone} (전화상담)</span>
             </a>
 
             {!isAdmin ? (
