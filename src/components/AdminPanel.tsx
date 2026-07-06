@@ -93,6 +93,22 @@ export default function AdminPanel({
 
   // Server upload helper for images
   const uploadToServer = async (base64Image: string): Promise<string> => {
+    // Vercel, Netlify, Github Pages 등 서버리스/스태틱 배포 환경에서는
+    // 업로드 폴더(/public/uploads)가 영구 유지되지 않으므로 base64를 직접 데이터로 저장합니다.
+    const isServerless = typeof window !== 'undefined' && (
+      window.location.hostname.includes('vercel') ||
+      window.location.hostname.includes('netlify') ||
+      window.location.hostname.includes('amplify') ||
+      window.location.hostname.includes('github.io') ||
+      window.location.hostname.includes('firebaseapp') ||
+      window.location.hostname.includes('web.app')
+    );
+
+    if (isServerless) {
+      console.log('Serverless environment detected (Vercel/etc). Preserving image as base64 directly.');
+      return base64Image;
+    }
+
     try {
       const res = await fetch('/api/upload-image', {
         method: 'POST',
