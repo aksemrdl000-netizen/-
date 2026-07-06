@@ -71,7 +71,8 @@ export default function Portfolio({ items, onSelectProjectForQuote }: PortfolioP
             {filteredItems.map((item) => (
               <div
                 key={item.id}
-                className="group bg-white border border-line hover:border-brand-blue/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col h-full"
+                onClick={() => handleOpenModal(item)}
+                className="group bg-white border border-line hover:border-brand-blue/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col h-full cursor-pointer"
               >
                 {/* Image Wrap */}
                 <div className="relative aspect-video overflow-hidden bg-gray-light shrink-0">
@@ -97,25 +98,14 @@ export default function Portfolio({ items, onSelectProjectForQuote }: PortfolioP
                 </div>
 
                 {/* Card Body */}
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-lg font-extrabold text-navy tracking-tight mb-4 group-hover:text-brand-blue transition-colors">
-                      {item.title}
-                    </h3>
-
-                    {/* Description preview */}
-                    <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium line-clamp-4 min-h-[5rem]">
-                      {item.description}
-                    </p>
+                <div className="p-5 flex-1 flex flex-col justify-center items-center text-center">
+                  <h3 className="text-sm sm:text-base font-extrabold text-navy group-hover:text-brand-blue transition-colors leading-snug line-clamp-2">
+                    {item.title}
+                  </h3>
+                  <div className="mt-2.5 flex items-center justify-center gap-1 text-[11px] font-extrabold text-brand-blue hover:underline">
+                    <span>사진 보기</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
                   </div>
-
-                  <button
-                    onClick={() => handleOpenModal(item)}
-                    className="w-full flex items-center justify-center space-x-1.5 bg-gray-light hover:bg-slate-100 border border-line text-slate-700 hover:text-navy py-3 rounded-xl text-xs font-bold transition-all cursor-pointer"
-                  >
-                    <span>상세 설명 보기</span>
-                    <ArrowUpRight className="w-4 h-4 text-brand-blue" />
-                  </button>
                 </div>
               </div>
             ))}
@@ -142,14 +132,14 @@ export default function Portfolio({ items, onSelectProjectForQuote }: PortfolioP
               const currentImgSrc = itemImages[activeImageIndex] || selectedItem.image;
               return (
                 <>
-                  <div className="relative h-64 sm:h-80 bg-gray-light">
+                  <div className="relative h-72 sm:h-[450px] bg-slate-950 flex items-center justify-center">
                     <img
                       src={currentImgSrc}
                       alt={selectedItem.title}
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-full object-contain"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white via-white/10 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
                     
                     {/* Close Button */}
                     <button
@@ -159,11 +149,11 @@ export default function Portfolio({ items, onSelectProjectForQuote }: PortfolioP
                       <X className="w-5 h-5" />
                     </button>
 
-                    <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
-                      <span className="bg-brand-blue text-white text-[10px] font-bold px-2.5 py-1 rounded mb-2 inline-block tracking-wider uppercase">
+                    <div className="absolute bottom-6 left-6 right-6 pointer-events-none z-10">
+                      <span className="bg-brand-blue text-white text-[10px] font-bold px-2.5 py-1 rounded mb-2 inline-block tracking-wider uppercase shadow">
                         {selectedItem.category}
                       </span>
-                      <h3 className="text-xl sm:text-2xl font-extrabold text-navy tracking-tight shadow-sm mt-1">
+                      <h3 className="text-base sm:text-xl font-extrabold text-white tracking-tight drop-shadow-md">
                         {selectedItem.title}
                       </h3>
                     </div>
@@ -197,19 +187,6 @@ export default function Portfolio({ items, onSelectProjectForQuote }: PortfolioP
               );
             })()}
 
-            {/* Modal Body */}
-            <div className="p-6 sm:p-8 space-y-6 max-h-[calc(100vh-400px)] overflow-y-auto">
-              
-              {/* Description */}
-              <div className="space-y-2">
-                <h4 className="text-xs text-slate-400 font-bold uppercase tracking-wider">설비 상세 설명</h4>
-                <p className="text-slate-600 text-sm leading-relaxed font-medium whitespace-pre-line">
-                  {selectedItem.description}
-                </p>
-              </div>
-
-            </div>
-
             {/* Modal Action Buttons */}
             <div className="p-6 bg-gray-light border-t border-line flex flex-col sm:flex-row gap-3">
               <a
@@ -226,7 +203,6 @@ export default function Portfolio({ items, onSelectProjectForQuote }: PortfolioP
                 닫기
               </button>
             </div>
-
           </div>
         </div>
       )}
