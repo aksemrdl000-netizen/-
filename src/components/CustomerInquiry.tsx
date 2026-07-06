@@ -83,22 +83,32 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
   };
 
   const values = [
-    { title: '성능 100% 복원', desc: '정밀 온도 보정 및 열선 재배치, 노체 균열 보강을 통해 신제품 수준의 높은 가열 성능과 온도 분배율을 되찾아 드립니다.' },
-    { title: '독보적 에너지 절감', desc: '손상된 구형 단열재를 고밀도 세라믹 파이버로 전면 재시공하고 폐열 회수식 버너를 튜닝하여 전력·가스 소모를 즉시 줄입니다.' },
-    { title: '불량률 제로 회복', desc: 'SCR 정밀 다구역 전력 제어반 및 고성능 디지털 PID 시스템으로 로내 온도 편차를 ±1℃ 이내로 극소화하여 열처리 하자를 예방합니다.' },
-    { title: '유지 정비 비용 절감', desc: '외장식 교환 발열체 유닛 개조, 표준화된 고수명 소모품 적용으로 불필요한 사후 관리 및 수리비 지출을 영구 예방합니다.' },
-    { title: '설비 수명 10년 연장', desc: '로체 골조 보강과 열변형 방지 지지 설계를 통해 신규 설비 교체 비용 대비 단 20~30%의 예산으로 사용 수명을 획기적으로 늘립니다.' }
+    { 
+      title: '완벽한 성능 복원', 
+      desc: '정밀 온도 보정 및 열선 재배치, 노체 크랙 보강을 통해 신장비 수준의 높은 온도 균질성을 되찾아 드립니다.',
+      color: 'text-brand-blue'
+    },
+    { 
+      title: '독보적 에너지 절감', 
+      desc: '고밀도 세라믹 단열 완벽 충진으로 열 방출을 완벽 차단해 가스 및 전력 요금을 즉각 줄여 드립니다.',
+      color: 'text-brand-orange'
+    },
+    { 
+      title: '설비 수명 10년 연장', 
+      desc: '로체 골조 전면 보강 및 최신 디지털 제어반 이식을 통해 신설 대비 70~80% 예산을 절감해 드립니다.',
+      color: 'text-brand-blue'
+    }
   ];
 
   const consultSteps = [
-    { num: '01', title: '전화 상담 및 애로 접수', desc: '고장 현상, 온도 편차, 버너 실화 상태 등 1차 진단' },
-    { num: '02', title: '무상 현장 정밀 실사 및 정밀 진단', desc: '당사 수석 엔지니어가 직접 방문하여 로체 열화 및 열선 저항 정밀 계측' },
-    { num: '03', title: '보수/개조 도면 및 투명 견적서 제안', desc: '과다 정비를 지양하고 필수 정비 내역 중심의 명확한 투명 내역서 산출' },
-    { num: '04', title: '현장 신속 시공 및 시운전 검증', desc: '숙련된 기술진의 안전 밀착 정비 시공 및 가열 균일도(TUS) 최종 검증' }
+    { num: '01', title: '전화 상담 및 애로 접수', desc: '고장 현상, 온도 편차, 버너 실화 상태 등 1차 진단', color: 'bg-brand-blue/5 text-brand-blue border-brand-blue/20' },
+    { num: '02', title: '무상 현장 정밀 진단', desc: '당사 수석 엔지니어가 직접 방문하여 로체 열화 및 열선 저항 정밀 계측', color: 'bg-brand-orange/5 text-brand-orange border-brand-orange/20' },
+    { num: '03', title: '도면 및 투명 견적 제안', desc: '과다 정비를 지양하고 필수 정비 내역 중심의 명확한 투명 내역서 산출', color: 'bg-brand-blue/5 text-brand-blue border-brand-blue/20' },
+    { num: '04', title: '신속 시공 및 시운전 검증', desc: '숙련된 기술진의 안전 밀착 정비 시공 및 가열 균일도(TUS) 최종 검증', color: 'bg-brand-orange/5 text-brand-orange border-brand-orange/20' }
   ];
 
   return (
-    <section id="inquiry" className="py-24 bg-white relative border-t border-line overflow-hidden">
+    <section id="inquiry" className="py-24 bg-white relative border-t border-b border-line overflow-hidden">
       {/* Visual glowing heat circle */}
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -107,7 +117,7 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
         {/* Section 9: 고객이 얻는 가치 */}
         <div>
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <p className="text-xs text-brand-blue font-bold uppercase tracking-widest">Customer Value Addition</p>
+            <p className="text-xs text-brand-orange font-bold uppercase tracking-widest">Customer Value Addition</p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-navy tracking-tight">
               열처리로 보수·개조를 통한 설비 경쟁력 극대화
             </h2>
@@ -117,17 +127,21 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {values.map((v, idx) => (
               <div
                 key={v.title}
-                className="bg-gray-light border border-line hover:border-brand-blue/40 p-6 rounded-2xl relative transition-all shadow-sm"
+                className={`bg-gray-light border border-line p-6 rounded-2xl relative transition-all shadow-sm ${
+                  v.color === 'text-brand-blue' ? 'hover:border-brand-blue/40' : 'hover:border-brand-orange/40'
+                }`}
               >
-                <div className="absolute top-4 right-4 text-xs font-mono font-extrabold text-brand-blue/30">
+                <div className={`absolute top-4 right-4 text-xs font-mono font-extrabold ${
+                  v.color === 'text-brand-blue' ? 'text-brand-blue/30' : 'text-brand-orange/30'
+                }`}>
                   VALUE 0{idx + 1}
                 </div>
                 <div className="bg-white border border-line w-10 h-10 rounded-lg flex items-center justify-center mb-5">
-                  <Star className="w-5 h-5 text-brand-blue" />
+                  <Star className={`w-5 h-5 ${v.color}`} />
                 </div>
                 <h3 className="text-base font-extrabold text-navy mb-2 tracking-tight">{v.title}</h3>
                 <p className="text-xs text-slate-600 leading-relaxed font-medium">{v.desc}</p>
@@ -158,7 +172,7 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
                 <div className="space-y-4">
                   {consultSteps.map((step) => (
                     <div key={step.num} className="flex gap-4 items-start">
-                      <div className="bg-brand-blue/5 text-brand-blue font-mono font-bold text-xs px-2.5 py-1 rounded-md border border-brand-blue/20 shrink-0">
+                      <div className={`font-mono font-bold text-xs px-2.5 py-1 rounded-md border shrink-0 ${step.color}`}>
                         {step.num}
                       </div>
                       <div>
@@ -172,7 +186,7 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
 
               {/* Call support */}
               <div className="bg-gray-light border border-line p-6 rounded-2xl flex items-center space-x-4 shadow-sm">
-                <div className="bg-brand-blue p-3 rounded-xl shadow shadow-brand-blue/10">
+                <div className="bg-brand-orange p-3 rounded-xl shadow shadow-brand-orange/10">
                   <PhoneCall className="w-6 h-6 text-white animate-bounce" />
                 </div>
                 <div>
@@ -318,7 +332,7 @@ export default function CustomerInquiry({ preselectedModel, onClearPreselect }: 
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full flex items-center justify-center space-x-2 bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 rounded-xl shadow shadow-brand-blue/10 transition-all cursor-pointer"
+                        className="w-full flex items-center justify-center space-x-2 bg-brand-orange hover:bg-orange-600 text-white font-bold py-4 rounded-xl shadow shadow-brand-orange/10 transition-all cursor-pointer"
                       >
                         {isSubmitting ? (
                           <>

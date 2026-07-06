@@ -59,11 +59,11 @@ export default function Header({
             onClick={() => handleItemClick('home')}
           >
             <div className="bg-brand-blue p-2 rounded-lg flex items-center justify-center shadow-md">
-              <Flame className="w-5 h-5 text-white animate-pulse" />
+              <Flame className="w-5 h-5 text-brand-orange animate-pulse" />
             </div>
             <div>
               <span className="font-display font-extrabold text-xl tracking-tight text-navy flex items-center gap-1.5 leading-none">
-                광성산업 <span className="text-brand-blue text-[10px] px-1.5 py-0.5 bg-brand-blue/5 border border-brand-blue/20 rounded font-bold">열처리로 전문</span>
+                광성산업 <span className="text-brand-orange text-[10px] px-1.5 py-0.5 bg-brand-orange/5 border border-brand-orange/20 rounded font-bold">열처리로 전문</span>
               </span>
               <p className="text-[10px] text-brand-blue font-bold tracking-wider uppercase mt-1">Industrial Furnace Technology</p>
             </div>
@@ -112,7 +112,7 @@ export default function Header({
                 id="header-admin-btn"
                 className="flex items-center space-x-1.5 bg-navy hover:bg-slate-800 text-white border border-transparent px-3.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer shadow-sm"
               >
-                <Lock className="w-3.5 h-3.5 text-brand-blue" />
+                <Lock className="w-3.5 h-3.5 text-brand-orange" />
                 <span>관리자 모드</span>
               </button>
             )}

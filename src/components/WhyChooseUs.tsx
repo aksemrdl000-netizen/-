@@ -11,38 +11,32 @@ export default function WhyChooseUs() {
       glow: 'shadow-md shadow-slate-100',
       points: [
         '수십 년간 축적된 다양한 제조사 열처리로 정비 이력',
-        '노후 노체 분해 수리 및 고성능 내열강 특수 제관 용접',
-        '오차 범위 ±1℃ 복원을 위한 PID 제어 시스템 튜닝 기술',
-        '단열 두께 보강 및 열 손실 시뮬레이션 기반 마감 시공',
-        '구형 조작반의 최신 PLC 모니터링 스마트 자동화 개조'
+        '±1℃ 극소 온도 편차 복원을 위한 PID 제어 시스템 튜닝 기술',
+        '고밀도 세라믹 단열 시공 및 스마트 PLC 디지털 제어 개조'
       ]
     },
     {
       title: '신뢰 (Trust)',
       subtitle: '책임감 있는 정직한 파트너십',
-      icon: <ShieldCheck className="w-8 h-8 text-blue-600" />,
-      color: 'border-line border-l-4 border-l-navy bg-white',
+      icon: <ShieldCheck className="w-8 h-8 text-brand-orange" />,
+      color: 'border-line border-l-4 border-l-brand-orange bg-white',
       glow: 'shadow-md shadow-slate-100',
       points: [
-        '허위 과다 견적을 원천 배제한 투명한 필수 정비 공정 제안',
-        '수리 자재의 출처가 확실한 정품 세라믹 파이버 및 국산 히터 적용',
-        '공장 생산에 지장이 없도록 가동 중단 일정을 준수하는 시공 마감',
-        '정비 완료 후 온도 균질도(TUS) 테스트를 통한 객관적 검증 지원',
-        '24시간 긴급 수리 긴급 대응반 운영을 통한 지속적 파트너십'
+        '허위 과다 청구를 원천 차단하는 정직하고 직관적인 투명 견적',
+        '생산 차질을 방지하는 칼 같은 시공 일정 준수 및 24시간 긴급 정비 대응',
+        '시공 완료 후 정밀 다채널 TUS(온도 균질도) 현장 측정 및 검증 지원'
       ]
     },
     {
       title: '합리적인 가격 (Value)',
       subtitle: '불필요한 설비 신설 비용 완전 차단',
-      icon: <DollarSign className="w-8 h-8 text-emerald-600" />,
-      color: 'border-line border-l-4 border-l-navy bg-white',
+      icon: <DollarSign className="w-8 h-8 text-brand-blue" />,
+      color: 'border-line border-l-4 border-l-brand-blue bg-white',
       glow: 'shadow-md shadow-slate-100',
       points: [
-        '신설 대비 70~80% 예산 절감 효과가 있는 노후로 리모델링 기법',
-        '과스펙 정비를 지양하고 고장 원인 부위만을 정밀 정비하는 가격 합리성',
-        '단열재 완벽 충진으로 열방출을 막아 월 가스·전력 요금 최대 30% 절감',
-        '표준화된 고수명 소모성 교체 부품 보급을 통한 유지비 최소화',
-        '가동 신뢰도 증가로 생산 불량률을 감소시켜 원가 절감 기여'
+        '새 장비 구입 대비 최대 70~80% 예산을 아끼는 정교한 리빌딩 기법',
+        '열방출을 완벽 마감해 가스·전력 요금을 즉각 줄여주는 에너지 세이빙',
+        '표준화된 고수명 국산 최고급 부품 적용으로 향후 유지보수비 최소화'
       ]
     }
   ];
@@ -52,7 +46,7 @@ export default function WhyChooseUs() {
       {/* Background decoration lines */}
       <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
         <div className="absolute left-1/4 top-0 bottom-0 w-px bg-gradient-to-b from-slate-200 via-brand-blue/30 to-slate-200" />
-        <div className="absolute right-1/4 top-0 bottom-0 w-px bg-gradient-to-b from-slate-200 via-navy/30 to-slate-200" />
+        <div className="absolute right-1/4 top-0 bottom-0 w-px bg-gradient-to-b from-slate-200 via-brand-orange/30 to-slate-200" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,7 +57,7 @@ export default function WhyChooseUs() {
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-navy tracking-tight">
             우리를 선택해야 하는 세 가지 이유
           </h2>
-          <div className="h-1 w-12 bg-brand-blue mx-auto rounded-full" />
+          <div className="h-1 w-12 bg-brand-orange mx-auto rounded-full" />
           <p className="text-slate-500 text-sm sm:text-base leading-relaxed font-medium">
             기존 설비의 경제성과 가동 안전성을 최고 수준으로 끌어올리는 광성산업만의 약속입니다.
           </p>
@@ -100,7 +94,7 @@ export default function WhyChooseUs() {
 
               {idx === 2 && (
                 <div className="mt-8 pt-6 border-t border-line bg-gray-50 p-4 rounded-xl">
-                  <p className="text-xs text-brand-blue font-bold text-center leading-relaxed">
+                  <p className="text-xs text-brand-orange font-bold text-center leading-relaxed">
                     "불필요한 비용을 과감히 없애고,<br />
                     고객 예산에 맞춘 최고의 가성비 산업로를 제공합니다."
                   </p>

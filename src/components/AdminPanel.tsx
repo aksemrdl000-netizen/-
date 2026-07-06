@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PortfolioItem, Inquiry } from '../types';
 import { getStoredPortfolio, savePortfolio, getStoredInquiries, saveInquiries, INITIAL_PORTFOLIO } from '../data';
-import { Lock, Plus, Trash2, Edit, Save, X, Eye, FileText, CheckCircle2, RefreshCw, Star, Info, Hammer, Sparkles, MessageSquare, Flame, Upload, ImageIcon } from 'lucide-react';
+import { Lock, Plus, Trash2, Edit, Save, X, Eye, FileText, CheckCircle2, RefreshCw, Star, Info, Hammer, Sparkles, MessageSquare, Flame, Upload, ImageIcon, Download, Clipboard, Check } from 'lucide-react';
 
 interface AdminPanelProps {
   portfolio: PortfolioItem[];
@@ -74,6 +74,67 @@ export default function AdminPanel({
   const [formFeatures, setFormFeatures] = useState('');
   const [formDescription, setFormDescription] = useState('');
   const [isDragging, setIsDragging] = useState(false);
+
+  // Backup & Code Export States
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  // Backup & Import Handlers
+  const handleExportJSON = () => {
+    try {
+      const dataStr = JSON.stringify(portfolio, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+      const exportFileDefaultName = `kwangsung_portfolio_${new Date().toISOString().slice(0, 10)}.json`;
+      
+      const linkElement = document.createElement('a');
+      linkElement.setAttribute('href', dataUri);
+      linkElement.setAttribute('download', exportFileDefaultName);
+      linkElement.click();
+    } catch (err) {
+      alert('백업 파일 생성에 실패했습니다.');
+    }
+  };
+
+  const handleImportJSON = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const parsed = JSON.parse(event.target?.result as string);
+        if (Array.isArray(parsed)) {
+          const isValid = parsed.every(item => item && typeof item === 'object' && 'id' in item && 'title' in item);
+          if (isValid) {
+            if (confirm(`불러온 백업 파일에서 ${parsed.length}개의 포트폴리오를 가져오시겠습니까? 기존의 모든 실적 데이터가 덮어씌워집니다.`)) {
+              savePortfolio(parsed);
+              onUpdatePortfolio(parsed);
+              alert('백업 데이터를 성공적으로 불러왔습니다!');
+            }
+          } else {
+            alert('올바르지 않은 백업 파일 양식입니다.');
+          }
+        } else {
+          alert('올바르지 않은 백업 파일 양식입니다. (JSON 배열이 아닙니다.)');
+        }
+      } catch (error) {
+        alert('백업 파일을 읽는 도중 오류가 발생했습니다. 파일 형식을 확인해주세요.');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
+
+  const handleCopyCode = () => {
+    const codeStr = JSON.stringify(portfolio, null, 2);
+    navigator.clipboard.writeText(codeStr).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }).catch(err => {
+      alert('자동 복사에 실패했습니다. 아래 텍스트를 직접 드래그하여 복사해 주세요.');
+    });
+  };
 
   // File Upload & Compression handlers
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,10 +243,10 @@ export default function AdminPanel({
     setFormImage(defaultImg);
     setFormImages([defaultImg]);
     setManualUrlInput('');
-    setFormDuration('45일');
-    setFormSize('W 2,000 x H 2,000 x L 3,000 mm');
-    setFormTemperature('최대 1,000℃');
-    setFormFeatures('정밀 PID 컨트롤, 터치패널 제어반, 세라믹 파이버 단열');
+    setFormDuration('-');
+    setFormSize('-');
+    setFormTemperature('-');
+    setFormFeatures('');
     setFormDescription('새롭게 설계 인도된 맞춤 가열 및 정밀 분위기 전기로 시스템입니다.');
 
     // Scroll to form
@@ -400,6 +461,56 @@ export default function AdminPanel({
                 본 웹페이지는 B2B 클라이언트 프로토타입 사양으로, 추가 및 변경하신 모든 포트폴리오와 고객의 실시간 문의 내용은 브라우저의 <strong>로컬 스토리지(localStorage)</strong>에 보존됩니다. 브라우저 캐시를 소거하기 전까지 완벽히 보관 및 로딩됩니다.
               </p>
             </div>
+
+            <div className="bg-white border border-line p-5 rounded-2xl space-y-4 shadow-sm">
+              <h4 className="text-xs font-bold text-navy flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-brand-blue animate-pulse" />
+                <span>포트폴리오 백업 & 배포 연동</span>
+              </h4>
+              <p className="text-[10px] text-slate-500 leading-relaxed font-medium">
+                업로드하신 사진과 실적을 다른 기기나 Vercel 배포 사이트에 그대로 적용하기 위한 백업 시스템입니다.
+              </p>
+              
+              <div className="space-y-2 pt-1">
+                {/* Export JSON Button */}
+                <button
+                  type="button"
+                  onClick={handleExportJSON}
+                  className="w-full flex items-center justify-center gap-1.5 bg-brand-blue hover:bg-blue-600 text-white py-2.5 rounded-xl text-[11px] font-bold transition-all shadow-sm cursor-pointer"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>백업 파일 저장 (.json)</span>
+                </button>
+                
+                {/* Import JSON Button */}
+                <div className="relative">
+                  <input
+                    type="file"
+                    id="import-backup-file"
+                    accept="application/json"
+                    onChange={handleImportJSON}
+                    className="hidden"
+                  />
+                  <label
+                    htmlFor="import-backup-file"
+                    className="w-full flex items-center justify-center gap-1.5 bg-white hover:bg-slate-50 text-slate-700 border border-line py-2.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer text-center"
+                  >
+                    <Upload className="w-3.5 h-3.5 text-brand-blue" />
+                    <span>백업 파일 불러오기 (.json)</span>
+                  </label>
+                </div>
+                
+                {/* Code Export Button */}
+                <button
+                  type="button"
+                  onClick={() => setShowExportModal(true)}
+                  className="w-full flex items-center justify-center gap-1.5 bg-navy hover:bg-slate-800 text-white py-2.5 rounded-xl text-[11px] font-bold transition-all shadow-sm cursor-pointer"
+                >
+                  <FileText className="w-3.5 h-3.5 text-brand-blue" />
+                  <span>배포용 소스코드 추출 (AI 전송)</span>
+                </button>
+              </div>
+            </div>
           </div>
 
           {/* Core Panel Content */}
@@ -579,54 +690,6 @@ export default function AdminPanel({
                             첨부된 이미지가 없습니다. 최소 1장 이상의 사진을 업로드해 주세요.
                           </div>
                         )}
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-bold text-navy">제작 및 납품 기간 *</label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="예: 45일"
-                            value={formDuration}
-                            onChange={(e) => setFormDuration(e.target.value)}
-                            className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
-                          />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-bold text-navy">내외경 규격 *</label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="예: W 1,500 x H 1,500 x L 3,000"
-                            value={formSize}
-                            onChange={(e) => setFormSize(e.target.value)}
-                            className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
-                          />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-bold text-navy">최대 및 상용 온도 *</label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="예: 최대 1,100℃"
-                            value={formTemperature}
-                            onChange={(e) => setFormTemperature(e.target.value)}
-                            className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-navy">설비 주요 특징 (쉼표로 분리하여 기재) *</label>
-                        <input
-                          type="text"
-                          required
-                          placeholder="예: 고온 세라믹 단열재, 오버방지 이중센서, 터치스크린 모듈"
-                          value={formFeatures}
-                          onChange={(e) => setFormFeatures(e.target.value)}
-                          className="w-full bg-gray-light border border-line text-navy rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-brand-blue focus:bg-white font-semibold"
-                        />
                       </div>
 
                       <div className="space-y-1.5">
@@ -848,6 +911,76 @@ export default function AdminPanel({
         </div>
 
       </div>
+
+      {/* Export Source Code Modal */}
+      {showExportModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy/85 backdrop-blur-md">
+          <div className="bg-white border border-line rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl p-6 sm:p-8 space-y-5 relative">
+            
+            {/* Close Button */}
+            <button
+              onClick={() => setShowExportModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-navy cursor-pointer transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="space-y-2">
+              <div className="bg-brand-blue/10 border border-brand-blue/20 w-12 h-12 rounded-2xl flex items-center justify-center mb-2">
+                <FileText className="w-6 h-6 text-brand-blue" />
+              </div>
+              <h3 className="text-lg font-extrabold text-navy tracking-tight">배포용 소스코드 추출</h3>
+              <p className="text-xs text-slate-500 leading-relaxed font-medium">
+                업로드하신 실적 데이터와 이미지를 사이트에 완전히 고정하여 배포하고 싶으신가요?<br />
+                아래 상자 안의 텍스트 데이터를 복사한 후, <strong>AI 대화창에 "이 데이터로 포트폴리오를 업데이트해줘"라며 붙여넣어 주세요.</strong><br />
+                제가 소스코드 파일 자체를 수정해드려 배포 후에도 모든 방문자에게 사진들이 기본으로 보여집니다.
+              </p>
+            </div>
+
+            <div className="relative">
+              <textarea
+                readOnly
+                value={JSON.stringify(portfolio, null, 2)}
+                onClick={(e) => (e.target as HTMLTextAreaElement).select()}
+                className="w-full h-64 bg-gray-light border border-line text-navy font-mono text-[10px] rounded-xl p-4 focus:outline-none overflow-y-auto select-all cursor-pointer"
+              />
+              <div className="absolute bottom-3 right-3">
+                <button
+                  type="button"
+                  onClick={handleCopyCode}
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer ${
+                    copied ? 'bg-emerald-500 text-white' : 'bg-brand-blue hover:bg-blue-600 text-white'
+                  }`}
+                >
+                  {copied ? (
+                    <>
+                      <Check className="w-3.5 h-3.5" />
+                      <span>복사 완료!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Clipboard className="w-3.5 h-3.5" />
+                      <span>전체 복사하기</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex justify-end pt-2">
+              <button
+                type="button"
+                onClick={() => setShowExportModal(false)}
+                className="px-5 py-2.5 bg-gray-light hover:bg-slate-100 border border-line text-slate-600 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              >
+                창 닫기
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

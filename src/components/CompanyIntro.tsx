@@ -9,7 +9,7 @@ export default function CompanyIntro() {
       desc: '단열재 보강, 고효율 버너/히터 교체, 최신 PLC 디지털 제어 적용으로 기존 로를 새 장비 수준으로 리모델링합니다.'
     },
     {
-      icon: <HeartHandshake className="w-5 h-5 text-brand-blue" />,
+      icon: <HeartHandshake className="w-5 h-5 text-brand-orange" />,
       title: '철저한 긴급 출동 정비 시스템',
       desc: '돌발 장애 및 온도 편차 발생 시, 다년간의 정비 노하우를 가진 당사 전담 정비팀이 즉시 출동하여 현장 보수합니다.'
     }
@@ -18,7 +18,7 @@ export default function CompanyIntro() {
   return (
     <section className="py-24 bg-white border-t border-b border-line relative overflow-hidden">
       <div className="absolute top-0 right-0 w-80 h-80 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-50 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -37,7 +37,7 @@ export default function CompanyIntro() {
               산업용 열처리로는 영구적인 장비가 아닙니다. 장기간 고온 가동 시 단열재 열화, 열선 단선, 가스 버너 불완전 연소, 제어반 오작동 등 다양한 노후화 문제가 반드시 발생합니다. 광성산업은 축적된 기술력으로 기존 노후 노를 철저히 정비하고 복원합니다.
             </p>
 
-            <div className="p-5 bg-gray-light border-l-4 border-brand-blue border border-line rounded-r-xl space-y-2">
+            <div className="p-5 bg-gray-light border-l-4 border-brand-orange border border-line rounded-r-xl space-y-2">
               <p className="text-sm font-semibold text-navy">
                 "단순히 부품 하나를 바꾸는 정비가 아닙니다. 단열, 열량 연산, PID 제어 튜닝까지 유기적인 종합 진단이 이루어져야 기존 설비의 효율을 극대화할 수 있습니다."
               </p>

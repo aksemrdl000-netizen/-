@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Logo and Slogans */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="bg-brand-blue p-1.5 rounded-lg">
+              <div className="bg-brand-orange p-1.5 rounded-lg">
                 <Flame className="w-5 h-5 text-white" />
               </div>
               <span className="font-display font-extrabold text-lg tracking-tight text-white">

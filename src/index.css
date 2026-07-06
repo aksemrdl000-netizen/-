@@ -6,7 +6,8 @@
   --font-display: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
   --font-mono: "Pretendard", monospace;
   --color-navy: #0f172a;
-  --color-brand-blue: #1d4ed8;
+  --color-brand-blue: #0284c7; /* Sky Blue (하늘색) */
+  --color-brand-orange: #f97316; /* Orange (주황색) */
   --color-gray-light: #f8fafc;
   --color-line: #e2e8f0;
 }

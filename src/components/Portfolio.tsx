@@ -103,31 +103,17 @@ export default function Portfolio({ items, onSelectProjectForQuote }: PortfolioP
                       {item.title}
                     </h3>
 
-                    {/* Specs List */}
-                    <div className="space-y-3 bg-gray-light p-4 rounded-xl border border-line mb-4">
-                      <div className="flex items-center text-xs">
-                        <Clock className="w-3.5 h-3.5 text-brand-blue shrink-0 mr-2" />
-                        <span className="text-slate-400 w-16 shrink-0 font-bold">제작기간:</span>
-                        <span className="font-bold text-slate-700">{item.duration}</span>
-                      </div>
-                      <div className="flex items-center text-xs">
-                        <Maximize2 className="w-3.5 h-3.5 text-brand-blue shrink-0 mr-2" />
-                        <span className="text-slate-400 w-16 shrink-0 font-bold">내외규격:</span>
-                        <span className="font-mono text-slate-700 truncate font-bold">{item.size}</span>
-                      </div>
-                      <div className="flex items-center text-xs">
-                        <Thermometer className="w-3.5 h-3.5 text-brand-blue shrink-0 mr-2" />
-                        <span className="text-slate-400 w-16 shrink-0 font-bold">사용온도:</span>
-                        <span className="font-mono text-brand-blue font-extrabold">{item.temperature}</span>
-                      </div>
-                    </div>
+                    {/* Description preview */}
+                    <p className="text-slate-500 text-sm leading-relaxed mb-6 font-medium line-clamp-4 min-h-[5rem]">
+                      {item.description}
+                    </p>
                   </div>
 
                   <button
                     onClick={() => handleOpenModal(item)}
                     className="w-full flex items-center justify-center space-x-1.5 bg-gray-light hover:bg-slate-100 border border-line text-slate-700 hover:text-navy py-3 rounded-xl text-xs font-bold transition-all cursor-pointer"
                   >
-                    <span>상세 스펙 & 특징 보기</span>
+                    <span>상세 설명 보기</span>
                     <ArrowUpRight className="w-4 h-4 text-brand-blue" />
                   </button>
                 </div>
@@ -217,44 +203,9 @@ export default function Portfolio({ items, onSelectProjectForQuote }: PortfolioP
               {/* Description */}
               <div className="space-y-2">
                 <h4 className="text-xs text-slate-400 font-bold uppercase tracking-wider">설비 상세 설명</h4>
-                <p className="text-slate-600 text-sm leading-relaxed font-medium">
+                <p className="text-slate-600 text-sm leading-relaxed font-medium whitespace-pre-line">
                   {selectedItem.description}
                 </p>
-              </div>
-
-              {/* Standard Spec Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-gray-light border border-line p-4 rounded-2xl">
-                <div>
-                  <p className="text-[10px] text-slate-400 font-bold">제작 및 인도 기간</p>
-                  <p className="text-sm font-extrabold text-navy mt-1">{selectedItem.duration}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] text-slate-400 font-bold">정밀 치수 규격</p>
-                  <p className="text-xs font-mono font-bold text-navy mt-1 truncate">{selectedItem.size}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] text-slate-400 font-bold">설계 한계 온도</p>
-                  <p className="text-sm font-mono font-extrabold text-brand-blue mt-1">{selectedItem.temperature}</p>
-                </div>
-              </div>
-
-              {/* Unique Features / 특징 */}
-              <div className="space-y-3">
-                <h4 className="text-xs text-slate-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-brand-blue" />
-                  <span>주요 핵심 적용 기술</span>
-                </h4>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {selectedItem.features.map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start gap-2 bg-gray-light border border-line p-3 rounded-xl"
-                    >
-                      <CheckCircle className="w-4 h-4 text-brand-blue shrink-0 mt-0.5" />
-                      <span className="text-xs text-slate-600 font-medium leading-relaxed">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
 
             </div>

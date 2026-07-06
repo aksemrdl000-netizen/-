@@ -40,8 +40,8 @@ export default function Hero({ onScrollTo }: HeroProps) {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center space-x-2 bg-brand-blue/10 border border-brand-blue/30 px-4 py-2 rounded-full text-brand-blue text-xs sm:text-sm font-bold tracking-wide"
             >
-              <Flame className="w-4 h-4 text-brand-blue animate-pulse" />
-              <span>안전하고 완벽한 열처리로 유지보수·개조·정비</span>
+              <Flame className="w-4 h-4 text-brand-orange animate-pulse" />
+              <span className="text-slate-200">안전하고 완벽한 열처리로 유지보수·개조·정비</span>
             </motion.div>
 
             {/* Slogans */}
@@ -53,7 +53,7 @@ export default function Hero({ onScrollTo }: HeroProps) {
                 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight"
               >
                 열처리로 유지보수 <br className="sm:hidden" />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-amber-500">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-sky-400 to-brand-orange">
                   및 개조 전문
                 </span>
               </motion.h1>
@@ -76,14 +76,14 @@ export default function Hero({ onScrollTo }: HeroProps) {
               className="bg-[#1e293b]/60 backdrop-blur-sm border border-slate-800 p-5 rounded-2xl max-w-2xl"
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-brand-blue font-bold text-sm tracking-widest uppercase">One-Stop Care</span>
+                <span className="text-brand-orange font-bold text-sm tracking-widest uppercase">One-Stop Care</span>
                 <span className="text-xs text-slate-300">정밀 진단부터 보수/개조까지 완벽 케어</span>
               </div>
               <div className="grid grid-cols-5 gap-1 sm:gap-2 text-center">
                 {steps.map((step, idx) => (
                   <div key={step} className="flex items-center">
-                    <div className="flex-1 bg-navy/90 border border-slate-800 hover:border-brand-blue/40 rounded-xl py-3 px-1 sm:px-2 transition-all">
-                      <p className="text-[10px] text-slate-500 font-mono mb-1">0{idx + 1}</p>
+                    <div className="flex-1 bg-navy/90 border border-slate-800 hover:border-brand-orange/40 rounded-xl py-3 px-1 sm:px-2 transition-all">
+                      <p className="text-[10px] text-brand-blue font-mono mb-1">0{idx + 1}</p>
                       <p className="text-xs sm:text-sm font-bold text-slate-200">{step}</p>
                     </div>
                     {idx < steps.length - 1 && (
@@ -103,16 +103,16 @@ export default function Hero({ onScrollTo }: HeroProps) {
             >
               <button
                 onClick={() => onScrollTo('portfolio')}
-                className="group relative flex items-center justify-center space-x-2 bg-brand-blue hover:bg-blue-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-brand-blue/20 transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer"
+                className="group relative flex items-center justify-center space-x-2 bg-brand-blue hover:bg-sky-600 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-brand-blue/20 transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer"
               >
                 <span>보수·개조 실적 보기</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={() => onScrollTo('inquiry')}
-                className="flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/15 text-white font-bold px-8 py-4 rounded-xl border border-white/30 hover:border-white transition-all duration-200 cursor-pointer"
+                className="flex items-center justify-center space-x-2 bg-brand-orange hover:bg-orange-600 text-white font-bold px-8 py-4 rounded-xl border border-transparent transition-all duration-200 cursor-pointer shadow-lg shadow-brand-orange/10"
               >
-                <FileText className="w-5 h-5 text-brand-blue" />
+                <FileText className="w-5 h-5 text-white" />
                 <span>유지보수·개조 문의</span>
               </button>
             </motion.div>
